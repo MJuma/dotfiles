@@ -1,0 +1,91 @@
+! ----------------------------------------------------------------------------
+! file:     ~/.Xresources
+! author:   Slapshot
+! modified: May 2012
+! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! ----------------------------------------------------------------------------
+
+! Xcursor --------------------------------------------------------------------
+
+Xcursor.theme: Vanilla-DMZ-AA
+Xcursor.size:  22
+
+! Xft settings ---------------------------------------------------------------
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+
+! xterm ----------------------------------------------------------------------
+
+xterm*geometry:           140x40
+xterm*borderWidth:        0
+xterm*faceName:           terminus:bold:pixelsize=14
+!xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
+xterm*dynamicColors:      true
+xterm*utf8:               2
+xterm*eightBitInput:      true
+xterm*saveLines:          1024
+xterm*scrollKey:          true
+xterm*scrollTtyOutput:    false
+xterm*scrollBar:          false
+xterm*rightScrollBar:     true
+xterm*jumpScroll:         true
+xterm*multiScroll:        true
+xterm*toolBar:            false
+
+! scrollbar style - rxvt (default), plain (most compact), next, or xterm
+URxvt.scrollstyle: rxvt
+URxvt.secondaryScroll:  True
+URxvt.scrollBar: false
+!URxvt.font: xft:monospace:size=10
+URxvt.geometry: 85x25
+URxvt.saveLines: 8192
+URxvt.visualBell: true
+URxvt*termName: rxvt
+URxvt.iconFile: /home/slapshot/.icons/Faenza/apps/64/utilities-terminal.png
+
+URxvt.perl-ext-common:  default,matcher,vtwheel
+URxvt.urlLauncher:      iceweasel
+URxvt.matcher.button:   1
+
+!URxvt.transparent:true
+URxvt.background:  #1e1e1e
+URxvt.foreground:  white
+URxvt.cursorColor: #ffffff
+
+URxvt*font:                 xft:Monaco for Powerline:regular:size=8
+URxvt*imFont:               xft:Monaco for Powerline:regular:size=8
+URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8
+URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8
+URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8
+
+!black
+URxvt*color0:      #000000
+URxvt*color8:      #555753
+!red
+URxvt*color1:      #CC0000
+URxvt*color9:      #EF2929
+!green
+URxvt*color2:      #4E9A06
+URxvt*color10:     #8AE234
+!yellow
+URxvt*color3:      #C4A000
+URxvt*color11:     #FCE94F
+!blue
+URxvt*color4:      #3465A4
+URxvt*color12:     #729FCF
+!magenta
+URxvt*color5:      #75507B
+URxvt*color13:     #AD7FA8
+!cyan
+URxvt*color6:      #06989A
+URxvt*color14:     #34E2E2
+!white
+URxvt*color7:      #D3D7CF
+URxvt*color15:     #ECEDEE
+
+
+
