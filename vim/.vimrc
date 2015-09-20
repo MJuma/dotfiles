@@ -23,7 +23,6 @@ filetype off
     " Setting up Vundle - the vim plugin bundler end
 
     " Bundles
-        Bundle 'gmarik/vundle'
 	Bundle 'matchit.zip'
 	Bundle 'The-NERD-Commenter'
 	Bundle 'The-NERD-tree'

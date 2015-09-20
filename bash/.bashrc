@@ -81,41 +81,45 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Alias's
-alias nano='nano -u -c -m'                                     # 
-alias ping='ping -c 5'                                      # Ping address 5 times
-alias peekaboo='sudo netstat -plunt'                        # Show current network connections
-alias cmon='sudo !!'                                        # Redo last command as root
-alias ls='ls --color=auto'                                  # Colorize ls
-alias grep='grep --color=auto'                              # Colorize grep
-mcd() { mkdir -p "$1" && cd "$1";}                            # Make a directory and cd into it
-cls() { cd "$1" && ls;}                                       # cd into a directory and ls it
-backup() { cp -- "$1"{,.bak};}                              # Backup a file to file.bak
-md5check() { md5sum "$1" | grep "$2";}                      # Compare md5sum of file to key
-alias histg="history | grep"                                # Search through comman history: histg [keyword]
-alias ..='cd ..'                                            # Go up a directory
-alias ...='cd ../..'                                        # Go up two directories
-alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'   # Create hexdump of /dev/urandom to look busy
-alias nyan='telnet -e ^c nyancat.dakko.us'                  # Nyan Cat
-alias nethack='telnet nethack.alt.org'                      # Telnet game
-alias update='sudo apt-get update && sudo apt-get upgrade'  # Update system
-alias get='sudo apt-get install'                            # Get a package
-alias remove='sudo apt-get --purge remove'                  # Remove a package
-alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'
+# Alias'
+alias nano='nano -u -c -m'                                                          # colorized nano
+alias ping='ping -c 5'                                                              # Ping address 5 times
+alias peekaboo='sudo netstat -plunt'                                                # Show current network connections
+alias cmon='sudo !!'                                                                # Redo last command as root
+alias ls='ls --color=auto'                                                          # Colorize ls
+alias grep='grep --color=auto'                                                      # Colorize grep
+alias histg="history | grep"                                                        # Search through comman history: histg [keyword]
+alias ..='cd ..'                                                                    # Go up a directory
+alias ...='cd ../..'                                                                # Go up two directories
+alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'                           # Create hexdump of /dev/urandom to look busy
+alias nyan='telnet -e ^c nyancat.dakko.us'                                          # Nyan Cat
+alias nethack='telnet nethack.alt.org'                                              # Telnet game
+alias update='sudo apt-get update && sudo apt-get upgrade'                          # Update system
+alias get='sudo apt-get install'                                                    # Get a package
+alias remove='sudo apt-get --purge remove'                                          # Remove a package
+alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'       # open previous tmux session or new one if none others exist
+
+# Functions
+mcd() { mkdir -p "$1" && cd "$1";}                                                  # Make a directory and cd into it
+cls() { cd "$1" && ls;}                                                             # cd into a directory and ls it
+backup() { cp -- "$1"{,.bak};}                                                      # Backup a file to file.bak
+md5check() { md5sum "$1" | grep "$2";}                                              # Compare md5sum of file to key
+killmeteor() { kill `ps ax | grep [m]eteor | awk '{print $1}'`; }                   # kill all running instances of meteor
+checkport() { lsof -i:$1; }                                                         # check for any programs using a given port   
 
 
 # Extract an archive file: extract [file]
 extract() { 
     if [ -f $1 ] ; then 
       case $1 in 
-        *.tar.bz2)   tar xjf $1     ;; 
-        *.tar.gz)    tar xzf $1     ;; 
+        *.tar.bz2)   tar xvjf $1    ;; 
+        *.tar.gz)    tar xvzf $1    ;; 
         *.bz2)       bunzip2 $1     ;; 
         *.rar)       unrar e $1     ;; 
         *.gz)        gunzip $1      ;; 
-        *.tar)       tar xf $1      ;; 
-        *.tbz2)      tar xjf $1     ;; 
-        *.tgz)       tar xzf $1     ;; 
+        *.tar)       tar xvf $1     ;; 
+        *.tbz2)      tar xvjf $1    ;; 
+        *.tgz)       tar xvzf $1    ;; 
         *.zip)       unzip $1       ;; 
         *.Z)         uncompress $1  ;; 
         *.7z)        7z x $1        ;; 
@@ -125,3 +129,6 @@ extract() {
          echo "'$1' is not a valid file" 
      fi 
 }
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
