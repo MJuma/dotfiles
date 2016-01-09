@@ -82,7 +82,7 @@ xterm*|rxvt*)
 esac
 
 # Alias'
-alias nano='nano -u -c -m'                                                          # colorized nano
+alias nano='nano -c -m'                                                          # colorized nano
 alias ping='ping -c 5'                                                              # Ping address 5 times
 alias peekaboo='sudo netstat -plunt'                                                # Show current network connections
 alias cmon='sudo !!'                                                                # Redo last command as root
