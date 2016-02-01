@@ -98,6 +98,7 @@ alias update='sudo apt-get update && sudo apt-get upgrade'                      
 alias get='sudo apt-get install'                                                    # Get a package
 alias remove='sudo apt-get --purge remove'                                          # Remove a package
 alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'       # open previous tmux session or new one if none others exist
+alias prettyjson='python -m json.tool'						    # pretty print json
 
 # Functions
 mcd() { mkdir -p "$1" && cd "$1";}                                                  # Make a directory and cd into it
