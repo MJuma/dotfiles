@@ -89,7 +89,7 @@ esac
 alias nano='nano -c -m'                                                          # colorized nano
 alias ping='ping -c 5'                                                              # Ping address 5 times
 alias peekaboo='sudo netstat -plunt'                                                # Show current network connections
-alias cmon='sudo !!'                                                                # Redo last command as root
+alias cmon='sudo $(history -p !!)'                                                  # Redo last command as root
 alias ls='ls --color=auto'                                                          # Colorize ls
 alias grep='grep --color=auto'                                                      # Colorize grep
 alias histg="history | grep"                                                        # Search through comman history: histg [keyword]
