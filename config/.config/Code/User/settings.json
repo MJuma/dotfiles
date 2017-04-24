@@ -30,5 +30,17 @@
     "editor.quickSuggestions": true,
     "editor.acceptSuggestionOnEnter": true,
     "editor.rulers": [140],
-    "editor.renderIndentGuides": true
+    "editor.renderIndentGuides": true,
+    "docker.enableLinting": true,
+    "sync.gist": "1672a4bf553735628a18c7571de74886",
+    "sync.lastUpload": "2017-03-05T20:41:05.837Z",
+    "sync.autoDownload": false,
+    "sync.autoUpload": false,
+    "sync.lastDownload": "",
+    "sync.version": 262,
+    "sync.showSummary": true,
+    "sync.forceDownload": false,
+    "sync.anonymousGist": false,
+    "sync.host": "",
+    "sync.pathPrefix": ""
 }
