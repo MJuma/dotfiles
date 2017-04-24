@@ -86,7 +86,7 @@ xterm*|rxvt*)
 esac
 
 # Alias'
-alias nano='nano -c -m'                                                          # colorized nano
+alias nano='nano -c -m'                                                             # colorized nano
 alias ping='ping -c 5'                                                              # Ping address 5 times
 alias peekaboo='sudo netstat -plunt'                                                # Show current network connections
 alias cmon='sudo $(history -p !!)'                                                  # Redo last command as root
@@ -102,8 +102,10 @@ alias update='sudo apt-get update && sudo apt-get upgrade'                      
 alias get='sudo apt-get install'                                                    # Get a package
 alias remove='sudo apt-get --purge remove'                                          # Remove a package
 alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'       # open previous tmux session or new one if none others exist
-alias prettyjson='python -m json.tool'						    # pretty print json
-alias npmg='npm list -g --depth=0'						    # list all globally install npm packages
+alias prettyjson='python -m json.tool'						                                  # pretty print json
+alias npmg='npm list -g --depth=0'						                                      # list all globally install npm packages
+alias ascii="man ascii"                                                             # man page listing the ascii codes
+alias xres="xrdb -merge ~/.Xresources"
 
 # Functions
 mcd() { mkdir -p "$1" && cd "$1";}                                                  # Make a directory and cd into it
@@ -112,6 +114,7 @@ backup() { cp -- "$1"{,.bak};}                                                  
 md5check() { md5sum "$1" | grep "$2";}                                              # Compare md5sum of file to key
 killmeteor() { kill `ps ax | grep [m]eteor | awk '{print $1}'`; }                   # kill all running instances of meteor
 checkport() { lsof -i:$1; }                                                         # check for any programs using a given port   
+wttr() { curl -s "wttr.in/$1"; }                                                    # returns the weather in the given location   
 
 
 # Extract an archive file: extract [file]
