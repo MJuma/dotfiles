@@ -1,7 +1,7 @@
 ! ----------------------------------------------------------------------------
 ! file:     ~/.Xresources
-! author:   Slapshot
-! modified: May 2012
+! author:   Mohammad Juma
+! modified: April 2017
 ! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! ----------------------------------------------------------------------------
 
@@ -87,5 +87,11 @@ URxvt*color14:     #34E2E2
 URxvt*color7:      #D3D7CF
 URxvt*color15:     #ECEDEE
 
-
-
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+rofi.color-window: #273238, #273238, #1e2529
+rofi.color-normal: #273238, #c1c1c1, #273238, #394249, #ffffff
+rofi.color-active: #273238, #80cbc4, #273238, #394249, #80cbc4
+rofi.color-urgent: #273238, #ff1844, #273238, #394249, #ff1844
