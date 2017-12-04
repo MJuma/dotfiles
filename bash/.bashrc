@@ -52,6 +52,7 @@ alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'   
 alias prettyjson='python -m json.tool'						                                  # pretty print json
 alias npmg='npm list -g --depth=0'						                                      # list all globally install npm packages
 alias ascii="man ascii"                                                             # man page listing the ascii codes
+alias sudo="sudo -E"
 
 # Functions
 mcd() { mkdir -p "$1" && cd "$1";}                                                  # Make a directory and cd into it
