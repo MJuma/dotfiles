@@ -1,7 +1,7 @@
 ! ----------------------------------------------------------------------------
 ! file:     ~/.Xresources
 ! author:   Mohammad Juma
-! modified: April 2017
+! modified: October 2018
 ! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! ----------------------------------------------------------------------------
 
@@ -17,24 +17,63 @@ Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
 
 ! xterm ----------------------------------------------------------------------
 
-xterm*geometry:           140x40
-xterm*borderWidth:        0
-xterm*faceName:           terminus:bold:pixelsize=14
-!xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
-xterm*dynamicColors:      true
-xterm*utf8:               2
-xterm*eightBitInput:      true
-xterm*saveLines:          1024
-xterm*scrollKey:          true
-xterm*scrollTtyOutput:    false
-xterm*scrollBar:          false
-xterm*rightScrollBar:     true
-xterm*jumpScroll:         true
-xterm*multiScroll:        true
-xterm*toolBar:            false
+xtXTerm*geometry:         140x40
+xtXTerm*borderWidth:      0
+XTerm*dynamicColors:      true
+XTerm*utf8:               2
+XTerm*eightBitInput:      true
+XTerm*saveLines:          1024
+XTerm*scrollKey:          true
+XTerm*scrollTtyOutput:    false
+XTerm*scrollBar:          false
+XTerm*rightScrollBar:     true
+XTerm*jumpScroll:         true
+XTerm*multiScroll:        true
+XTerm*toolBar:            false
+XTerm*background:         #6aa7a5
+XTerm*foreground:         #6aa7a5
+XTerm*pointerColor:       #16A085
+XTerm*faceName:           Fixed
+XTerm*faceSize:           11
+XTerm*selectToClipboard:  true
+
+Xcursor.theme: Breeze
+Xcursor.size: 0
+
+*background: #2f343f
+*foreground: #d8dee8
+*foregroundbold: #d0d6e0
+*cursorColor: #b48ead
+*cursorForegroundColor: #d8dee8
+! black
+*color0: #4b5262
+*color8: #434a5a
+! red
+*color1: #bf616a
+*color9: #b3555e
+! green
+*color2: #a3be8c
+*color10: #93ae7c
+! yellow
+*color3: #ebcb8b
+*color11: #dbbb7b
+! blue
+*color4: #81a1c1
+*color12: #7191b1
+! magenta
+*color5: #b48ead
+*color13: #a6809f
+! cyan
+*color6: #88c0d0
+*color14: #76aebe
+! white
+*color7: #e5e9f0
+*color15: #d1d5dc
 
 ! scrollbar style - rxvt (default), plain (most compact), next, or xterm
 URxvt.scrollstyle: rxvt
