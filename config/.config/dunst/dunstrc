@@ -144,8 +144,8 @@
     context = mod4+shift+i
 
 [urgency_low]
-    background = "#4B5262"
-    foreground = "#D1D5DC"
+    background = "#e5e9f0"
+    foreground = "#4b5262"
     timeout = 5
 
 [urgency_normal]
@@ -154,8 +154,8 @@
     timeout = 20
 
 [urgency_critical]
-    background = "#4B5262"
-    foreground = "#BF616A"
+    background = "#BF616A"
+    foreground = "#e5e9f0"
     timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules
