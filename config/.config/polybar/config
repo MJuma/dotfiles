@@ -100,7 +100,7 @@ monitor = DP-1
     ws-icon-0 = 1;
     ws-icon-1 = 2;
     ws-icon-2 = 3;
-    ws-icon-3 = 4;
+    ws-icon-3 = 4;
     ws-icon-4 = 5;
     ws-icon-5 = 6;
     ws-icon-6 = 7;
@@ -120,6 +120,7 @@ monitor = DP-1
     ; C# material icon: 
     ; HTML5 material icon: 
     ; JS material icon: 
+    ; Email material icon: 
 
     ; Available tags:
     ;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
