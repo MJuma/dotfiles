@@ -42,5 +42,6 @@
     "sync.forceDownload": false,
     "sync.anonymousGist": false,
     "sync.host": "",
-    "sync.pathPrefix": ""
+    "sync.pathPrefix": "",
+    "breadcrumbs.enabled": true
 }
