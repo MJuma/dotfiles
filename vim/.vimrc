@@ -1,6 +1,6 @@
 """"" COLORS """""
 syntax enable           " enable syntax processing
-colorscheme sidonia
+colorscheme darcula
 
 """"" Spaces & Tabs """""
 set tabstop=4       	" in normal mode, sets the number of spaces to convert a tab to
