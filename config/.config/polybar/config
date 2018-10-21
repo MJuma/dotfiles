@@ -56,9 +56,9 @@ font-1 = NotoSans-Regular:size=12;2
 font-2 = "Material Design Icons:size=14;2"
 font-3 = FontAwesome:size=12;2
 
-modules-left = i3
-modules-center = xwindow 
-modules-right = date pulseaudio
+modules-left = i3 spotify
+modules-center =  
+modules-right = pulseaudio uptime cpu memory time date
 
 [bar/left]
 inherit = defaults
@@ -74,67 +74,62 @@ monitor = DP-1
     type = internal/i3
 
     ; Only show workspaces defined on the same output as the bar
-    ;
-    ; Useful if you want to show monitor specific workspaces
-    ; on different bars
-    ;
-    ; Default: false
-    pin-workspaces = true
+    pin-workspaces = false
 
     ; This will split the workspace name on ':'
-    ; Default: false
     strip-wsnumbers = true
 
-    ; Sort the workspaces by index instead of the default
-    ; sorting that groups the workspaces by output
-    ; Default: false
-    index-sort = false
+    ; Sort the workspaces by index instead of the default sorting that groups the workspaces by output
+    index-sort = true
 
     ; Create click handler used to focus workspace
-    ; Default: true
     enable-click = true
 
-    ; Create scroll handlers used to cycle workspaces
-    ; Default: true
-    enable-scroll = true
-
     ; Wrap around when reaching the first/last workspace
-    ; Default: true
     wrapping-scroll = false
-
-    ; Set the scroll cycle direction 
-    ; Default: true
-    reverse-scroll = false
 
     ; Use fuzzy (partial) matching on labels when assigning 
     ; icons to workspaces
     ; Example: code;♚ will apply the icon to all workspaces 
     ; containing 'code' in the label
     ; Default: false
-    fuzzy-match = true
+    fuzzy-match = false
 
     ; ws-icon-[0-9]+ = label;icon
     ; NOTE: The label needs to match the name of the i3 workspace
-    ws-icon-0 = 1;♚
-    ws-icon-1 = 2;♛
-    ws-icon-2 = 3;♜
-    ws-icon-3 = 4;♝
-    ws-icon-4 = 5;♞
-    ws-icon-default = ♟
-    ; NOTE: You cannot skip icons, e.g. to get a ws-icon-6
-    ; you must also define a ws-icon-5.
+    ws-icon-0 = 1;
+    ws-icon-1 = 2;
+    ws-icon-2 = 3;
+    ws-icon-3 = 4;
+    ws-icon-4 = 5;
+    ws-icon-5 = 6;
+    ws-icon-6 = 7;
+    ws-icon-7 = 8;
+    ws-icon-default = 
+    ; Windows 10 material icon: 
+    ; Office material icon: 
+    ; Poo material icon: 
+    ; Chrome material icon: 
+    ; Git material icon: 
+    ; Internet explorer material icon: 
+    ; Edge material icon: 
+    ; Generic browser material icon: 
+    ; Skype material icnon: 
+    ; Spotify material icon: 
+    ; Music material icon: 
+    ; C# material icon: 
+    ; HTML5 material icon: 
+    ; JS material icon: 
 
     ; Available tags:
     ;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
     ;   <label-mode> (default)
     format = <label-state> <label-mode>
 
-    ; Available tokens:
-    ;   %mode%
-    ; Default: %mode%
     label-mode = %mode%
-    label-mode-padding = 2
-    label-mode-background = ${colors.color7}
+    label-mode-padding = 1
+    label-mode-foreground = ${colors.foreground}
+    label-mode-background = ${colors.background}
 
     ; Available tokens:
     ;   %name%
@@ -142,11 +137,11 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-focused = %index%
+    label-focused = %index%: %icon%
     label-focused-foreground = ${colors.foreground}
     label-focused-background = ${colors.background}
-    label-focused-underline = ${colors.color7}
-    label-focused-padding = 4
+    label-focused-underline = ${colors.color1}
+    label-focused-padding = 2
 
     ; Available tokens:
     ;   %name%
@@ -154,8 +149,8 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-unfocused = %index%
-    label-unfocused-padding = 4
+    label-unfocused = %index%: %icon%
+    label-unfocused-padding = 2
     label-unfocused-background = ${colors.background}
     label-unfocused-foreground = ${colors.foreground}
 
@@ -165,9 +160,10 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-visible = %index%
-    label-visible-underline = ${colors.foreground}
-    label-visible-padding = 4
+    label-visible = %index%: %icon%
+    label-visible-background = ${colors.background}
+    label-visible-underline = ${colors.background}
+    label-visible-padding = 2
 
     ; Available tokens:
     ;   %name%
@@ -175,17 +171,26 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-urgent = %index%
+    label-urgent = %index%: %icon%
+    label-urgent-background = ${colors.color1}
     label-urgent-foreground = ${colors.foreground}
-    label-urgent-background = ${colors.background}
     label-urgent-underline = ${colors.color7}
-    label-urgent-padding = 4
+    label-urgent-padding = 2
 
     ; Separator in between workspaces
     label-separator =
     label-separator-padding =
     label-separator-foreground =
 
+[module/spotify]
+    type = custom/script
+    interval = 1
+    exec = python ~/.config/polybar/spotify.py -f '{artist}: {song}'
+
+    label =  %output%
+    label-underline = ${colors.color10}
+
+    format-padding = 2
 
 [module/xwindow]
     type = internal/xwindow
@@ -193,24 +198,6 @@ monitor = DP-1
     label-padding = 2
     label-maxlen = 80
     label-foreground = ${colors.color7}
-
-[module/date]
-    type = internal/date
-
-    ; Seconds to sleep between updates
-    interval = 1.0
-
-    ; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
-    date = %m/%d/%Y
-    time = %I:%M:%S %p
-
-    date-alt = %A %B %d, %Y
-    time-alt = %I:%M:%S %p
-    
-    format = <label>
-    format-padding = 2
-
-    label =  %time% |  %date% 
 
 [module/pulseaudio]
     type = internal/pulseaudio
@@ -224,3 +211,72 @@ monitor = DP-1
     ramp-volume-2 = 
 
     format-underline = 40
+
+    format-volume-underline = ${colors.color1}
+
+[module/uptime]
+    type = custom/script
+    exec = ~/.config/polybar/uptime.sh
+    interval = 30
+
+    format-padding = 2
+    label-underline = ${colors.color2}
+
+[module/cpu]
+    type = internal/cpu
+
+    ; Seconds to sleep between updates
+    ; Default: 1
+    interval = 1
+
+    ; Available tokens:
+    ;   %percentage% (default) - total cpu load
+    ;   %percentage-cores% - load percentage for each core
+    ;   %percentage-core[1-9]% - load percentage for specific core
+    label = CPU %percentage%%
+    label-underline = ${colors.color3}
+
+[module/memory]
+    type = internal/memory
+
+    ; Seconds to sleep between updates
+    ; Default: 1
+    interval = 1
+
+    label = RAM %gb_used%/%gb_total% 
+    label-underline = ${colors.color4}
+
+    format-padding = 2
+
+[module/time]
+    type = internal/date
+
+    ; Seconds to sleep between updates
+    interval = 1.0
+
+    ; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+    time = %I:%M:%S %p
+
+    time-alt = %I:%M:%S %p
+    
+    format = <label>
+
+    label =  %time%
+    label-underline = ${colors.color5}
+
+[module/date]
+    type = internal/date
+
+    ; Seconds to sleep between updates
+    interval = 1.0
+
+    ; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+    date = %m/%d/%Y
+
+    date-alt = %A %B %d, %Y
+    
+    format = %{A:gsimplecal:} <label> %{A}
+    format-padding = 2
+
+    label =  %date% 
+    label-underline = ${colors.color6}
