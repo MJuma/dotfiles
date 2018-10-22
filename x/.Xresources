@@ -53,36 +53,36 @@ XTerm*selectToClipboard:  true
 *.cursorColor:  #b48ead
 
 ! black
-*.color0  : #4b5262
-*.color8  : #434a5a
+*.color0  : #3B4252
+*.color8  : #4C566A
 
 ! red
-*.color1  : #bf616a
-*.color9  : #b3555e
+*.color1  : #BF616A
+*.color9  : #B3555E
 
 ! green
-*.color2  : #a3be8c
-*.color10 : #93ae7c
+*.color2  : #A3BE8C
+*.color10 : #93AE7C
 
 ! yellow
-*.color3  : #ebcb8b
-*.color11 : #dbbb7b
+*.color3  : #EBCB8B
+*.color11 : #DBBB7B
 
 ! blue
-*.color4  : #81a1c1
-*.color12 : #7191b1
+*.color4  : #81A1C1
+*.color12 : #7191B1
 
 ! magenta
-*.color5  : #b48ead
-*.color13 : #a6809f
+*.color5  : #B48EAD
+*.color13 : #A6809F
 
 ! cyan
-*.color6  : #89d0bA
-*.color14 : #7dbba8
+*.color6  : #89D0BA
+*.color14 : #7DBBA8
 
 ! white
-*.color7  : #e5e9f0
-*.color15 : #d1d5dc
+*.color7  : #E5E9F0
+*.color15 : #D1D5DC
 
 ! ------------------------------------------------------------------------------
 ! URxvt Settings
