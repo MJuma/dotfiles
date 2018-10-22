@@ -221,7 +221,7 @@ monitor = DP-1
     interval = 30
 
     format-padding = 2
-    label-underline = ${colors.color2}
+    label-underline = ${colors.color3}
 
 [module/cpu]
     type = internal/cpu
@@ -235,7 +235,7 @@ monitor = DP-1
     ;   %percentage-cores% - load percentage for each core
     ;   %percentage-core[1-9]% - load percentage for specific core
     label = CPU %percentage%%
-    label-underline = ${colors.color3}
+    label-underline = ${colors.color2}
 
 [module/memory]
     type = internal/memory
@@ -245,7 +245,7 @@ monitor = DP-1
     interval = 1
 
     label = RAM %gb_used%/%gb_total% 
-    label-underline = ${colors.color4}
+    label-underline = ${colors.color6}
 
     format-padding = 2
 
@@ -263,7 +263,7 @@ monitor = DP-1
     format = <label>
 
     label =  %time%
-    label-underline = ${colors.color5}
+    label-underline = ${colors.color4}
 
 [module/date]
     type = internal/date
@@ -277,7 +277,7 @@ monitor = DP-1
     date-alt = %A %B %d, %Y
     
     format = %{A:gsimplecal:} <label> %{A}
-    format-padding = 2
+    format-padding = 1
 
     label =  %date% 
-    label-underline = ${colors.color6}
+    label-underline = ${colors.color5}
