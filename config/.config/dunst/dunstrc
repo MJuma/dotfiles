@@ -123,7 +123,6 @@
 
 [frame]
     width = 1
-    color = "#81A1C1"
 
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
@@ -175,3 +174,18 @@
 # NOTE: if you don't want a notification to be displayed, set the format to ""
 # NOTE: It might be helpful to run dunst -print in a terminal in order to find
 # fitting options for rules.
+
+[spotify]
+    appname = Spotify
+    background = "#A3BE8C"
+    foreground = "#FFFFFF"
+
+[teams]
+    summary = "*Microsoft Teams*"
+    background = "#B48EAD"
+    foreground = "#FFFFFF"
+
+[cookieautodelete]
+    summary = "*Cookie AutoDelete*"
+    background = "#81A1C1"
+    foreground = "#FFFFFF"
