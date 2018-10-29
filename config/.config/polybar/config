@@ -45,26 +45,27 @@ width = 100%
 height = 24
 radius = 0.0
 fixed-center = true
-background = ${colors.background}
-foreground = ${colors.foreground}
+background = ${colors.color0}
+foreground = ${colors.color7}
 line-size = 4
 line-color = ${colors.color4}
 border-size = 0
 border-color = ${colors.color4}
 font-0 = "Wuncon Siji:size=12;2"
 font-1 = NotoSans-Regular:size=12;2
-font-2 = "Material Design Icons:size=14;2"
-font-3 = FontAwesome:size=12;2
+font-2 = "Monaco for Powerline"
+font-3 = "Material Design Icons:size=14;2"
+font-4 = FontAwesome:size=12;2
 
-modules-left = i3 spotify
+modules-left = i3 right-spacer-dark spotify right-spacer-light
 modules-center =  
-modules-right = pulseaudio uptime cpu memory time date
+modules-right = pulseaudio left-spacer-light uptime left-spacer-dark left-spacer-light cpu left-spacer-dark left-spacer-light memory left-spacer-dark left-spacer-light time left-spacer-dark left-spacer-light date left-spacer
 
 [bar/left]
 inherit = defaults
 monitor = HDMI-1
 tray-position = right
-tray-padding = 2
+tray-padding-left = 2
 
 [bar/right]
 inherit = defaults
@@ -127,10 +128,10 @@ monitor = DP-1
     ;   <label-mode> (default)
     format = <label-state> <label-mode>
 
+    ; Available tokens:
+    ;   %mode%
+    ; Default: %mode%
     label-mode = %mode%
-    label-mode-padding = 1
-    label-mode-foreground = ${colors.foreground}
-    label-mode-background = ${colors.background}
 
     ; Available tokens:
     ;   %name%
@@ -138,11 +139,7 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-focused = %index%: %icon%
-    label-focused-foreground = ${colors.foreground}
-    label-focused-background = ${colors.background}
-    label-focused-underline = ${colors.color1}
-    label-focused-padding = 2
+    label-focused = %{B#E5E9F0 F#4C566A} %index%: %icon% %{B- F-}%{B#3B4252 F#E5E9F0}%{B- F-}
 
     ; Available tokens:
     ;   %name%
@@ -150,10 +147,7 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-unfocused = %index%: %icon%
-    label-unfocused-padding = 2
-    label-unfocused-background = ${colors.background}
-    label-unfocused-foreground = ${colors.foreground}
+    label-unfocused = %{B#4C566A F#3B4252}%{B- F-}%{B#4C566A F#E5E9F0} %index%: %icon% %{B- F-}%{B#3B4252 F#4C566A}%{B- F-}
 
     ; Available tokens:
     ;   %name%
@@ -161,10 +155,7 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-visible = %index%: %icon%
-    label-visible-background = ${colors.background}
-    label-visible-underline = ${colors.background}
-    label-visible-padding = 2
+    label-visible = %{B#4C566A F#3B4252}%{B- F-}%{B#4C566A F#E5E9F0} %index%: %icon% %{B- F-}%{B#3B4252 F#4C566A}%{B- F-}
 
     ; Available tokens:
     ;   %name%
@@ -172,16 +163,7 @@ monitor = DP-1
     ;   %index%
     ;   %output%
     ; Default: %icon%  %name%
-    label-urgent = %index%: %icon%
-    label-urgent-background = ${colors.color1}
-    label-urgent-foreground = ${colors.foreground}
-    label-urgent-underline = ${colors.color7}
-    label-urgent-padding = 2
-
-    ; Separator in between workspaces
-    label-separator =
-    label-separator-padding =
-    label-separator-foreground =
+    label-urgent = %{B#BF616A F#3B4252}%{B- F-}%{B#BF616A F#E5E9F0}%index%: %icon% %{B- F-}%{B#3B4252 F#BF616A}%{B- F-}
 
 [module/spotify]
     type = custom/script
@@ -189,9 +171,9 @@ monitor = DP-1
     exec = python ~/.config/polybar/spotify.py -f '{artist}: {song}'
 
     label =  %output%
-    label-underline = ${colors.color10}
 
     format-padding = 2
+    format-background = ${colors.color8}
 
 [module/xwindow]
     type = internal/xwindow
@@ -205,23 +187,29 @@ monitor = DP-1
     sink = alsa_output.pci-0000_12_00.3.analog-stereo
     use-ui-max = true
 
-    format-volume = <ramp-volume> <label-volume>
-    label-muted =  0%
     ramp-volume-0 = 
     ramp-volume-1 = 
     ramp-volume-2 = 
 
-    format-underline = 40
-
-    format-volume-underline = ${colors.color1}
+    bar-volume-width = 10
+    bar-volume-indicator = │
+    bar-volume-fill = ─
+    bar-volume-empty = ─
+    
+    label-muted =  0%
+    
+    format-volume = %{B#3B4252 F#4C566A}%{B- F-}%{B#4C566A F#E5E9F0}<ramp-volume> <bar-volume>%{B- F-}%{B#4C566A F#3B4252}%{B- F-}
+    format-muted = %{B#3B4252 F#4C566A}%{B- F-}%{B#4C566A F#E5E9F0}<label-muted>%{B- F-}%{B#4C566A F#3B4252}%{B- F-}
+    format-padding = 1
 
 [module/uptime]
     type = custom/script
     exec = ~/.config/polybar/uptime.sh
     interval = 30
-
-    format-padding = 2
-    label-underline = ${colors.color3}
+    
+    format =  <label>
+    format-padding = 1
+    format-background = ${colors.color8}
 
 [module/cpu]
     type = internal/cpu
@@ -234,8 +222,10 @@ monitor = DP-1
     ;   %percentage% (default) - total cpu load
     ;   %percentage-cores% - load percentage for each core
     ;   %percentage-core[1-9]% - load percentage for specific core
-    label = CPU %percentage%%
-    label-underline = ${colors.color2}
+    label =  %percentage%%
+
+    format-background = ${colors.color8}
+    format-padding = 1
 
 [module/memory]
     type = internal/memory
@@ -244,10 +234,10 @@ monitor = DP-1
     ; Default: 1
     interval = 1
 
-    label = RAM %gb_used%/%gb_total% 
-    label-underline = ${colors.color6}
+    label =  %gb_used%/%gb_total% 
 
-    format-padding = 2
+    format-padding = 1
+    format-background = ${colors.color8}
 
 [module/time]
     type = internal/date
@@ -261,9 +251,10 @@ monitor = DP-1
     time-alt = %I:%M:%S %p
     
     format = <label>
+    format-background = ${colors.color8}
+    format-padding = 1
 
     label =  %time%
-    label-underline = ${colors.color4}
 
 [module/date]
     type = internal/date
@@ -276,8 +267,36 @@ monitor = DP-1
 
     date-alt = %A %B %d, %Y
     
-    format = %{A:gsimplecal:} <label> %{A}
+    format = <label>
+    format-background = ${colors.color8}
     format-padding = 1
 
-    label =  %date% 
-    label-underline = ${colors.color5}
+    label =  %date%
+
+[module/right-spacer-dark]
+    type = custom/text
+    content = 
+
+    content-background = ${colors.color8}
+    content-foreground = ${colors.color0}
+
+[module/right-spacer-light]
+    type = custom/text
+    content = 
+
+    content-background = ${colors.color0}
+    content-foreground = ${colors.color8}
+
+[module/left-spacer-dark]
+    type = custom/text
+    content = 
+
+    content-background = ${colors.color8}
+    content-foreground = ${colors.color0}
+
+[module/left-spacer-light]
+    type = custom/text
+    content = 
+
+    content-background = ${colors.color0}
+    content-foreground = ${colors.color8}
