@@ -16,7 +16,6 @@
     "editor.lineNumbers": "on",
     "editor.minimap.enabled": true,
     "editor.mouseWheelZoom": true,
-    "workbench.colorTheme": "Darcula",
     "workbench.iconTheme": "vs-seti",
     "window.reopenFolders": "all",
     "files.insertFinalNewline": true,
@@ -43,5 +42,6 @@
     "sync.anonymousGist": false,
     "sync.host": "",
     "sync.pathPrefix": "",
-    "breadcrumbs.enabled": true
+    "breadcrumbs.enabled": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
