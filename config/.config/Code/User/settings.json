@@ -43,5 +43,6 @@
     "sync.host": "",
     "sync.pathPrefix": "",
     "breadcrumbs.enabled": true,
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "extensions.ignoreRecommendations": false
 }
