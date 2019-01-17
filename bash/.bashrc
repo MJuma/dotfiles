@@ -65,6 +65,7 @@ md5check() { md5sum "$1" | grep "$2";}                                          
 killmeteor() { kill `ps ax | grep [m]eteor | awk '{print $1}'`; }                   # kill all running instances of meteor
 checkport() { lsof -i:$1; }                                                         # check for any programs using a given port   
 wttr() { curl -s "wttr.in/$1"; }                                                    # returns the weather in the given location   
+randfile() { find $1 -type f | shuf -n 1; }                                         # returns a random file within a given dir
 
 # Extract an archive file: extract [file]
 extract() { 
