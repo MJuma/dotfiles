@@ -71,7 +71,15 @@ esac
 ## Shell Prompt
 ######
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    git_branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+
+    if [ $git_branch ]; then
+        git_status=$(git status --porcelain 2>/dev/null)
+        git_tracked_changes_count=$(for i in "$git_status"; do echo "$i"; done | grep -v '^?? ' | sed '/^$/d' | wc -l | sed "s/ //g")
+        git_untracked_changes_count=$(for i in "$git_status"; do echo "$i"; done | grep '^?? ' | sed '/^$/d' | wc -l | sed "s/ //g")
+
+        echo -e " (${git_branch}:${git_tracked_changes_count}:${git_untracked_changes_count})"
+    fi
 }
 
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -86,15 +94,15 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     fi
 
     if [[ ${EUID} == 0 ]] ; then
-        PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\] \$ '
+        PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\]\$ '
 	else
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\] \$ '
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\]\$ '
 	fi
 else
     if [[ ${EUID} == 0 ]]; then
-        PS1='\u@\h: \W$(parse_git_branch)\[\033[00m\] \$ '
+        PS1='\u@\h: \W$(parse_git_branch)\[\033[00m\]\$ '
     else
-        PS1='\u@\h: \w$(parse_git_branch)\[\033[00m\] \$ '
+        PS1='\u@\h: \w$(parse_git_branch)\[\033[00m\]\$ '
     fi
 fi
 
