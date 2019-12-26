@@ -74,3 +74,4 @@
     info = config --list
     nuke = !sh -c 'git reset --hard HEAD~$1' -
     unstage = reset HEAD
+    origin = remote show origin

@@ -94,15 +94,15 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     fi
 
     if [[ ${EUID} == 0 ]] ; then
-        PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\]\$ '
+        PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\] \$ '
 	else
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\]\$ '
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\] \$ '
 	fi
 else
     if [[ ${EUID} == 0 ]]; then
-        PS1='\u@\h: \W$(parse_git_branch)\[\033[00m\]\$ '
+        PS1='\u@\h: \W$(parse_git_branch)\[\033[00m\] \$ '
     else
-        PS1='\u@\h: \w$(parse_git_branch)\[\033[00m\]\$ '
+        PS1='\u@\h: \w$(parse_git_branch)\[\033[00m\] \$ '
     fi
 fi
 
@@ -119,6 +119,7 @@ alias sudo="sudo -E"                                                            
 alias cp="cp -i"                                                                                        # Confirm before overwriting files and directories
 alias df='df -h'                                                                                        # Human readable disk space usage
 alias free='free -m'                                                                                    # Free memory and swap in Mebibytes
+alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'        # Show free memory, uptime & ps updated every 3s
 alias nano='nano -c -m'                                                                                 # nano with cursor position shown and mouse support enabled
 alias ping='ping -c 5'                                                                                  # Ping address 5 times
 alias grep='grep --colour=auto'                                                                         # Colorize grep
@@ -168,12 +169,22 @@ extract() {
      fi 
 }
 
+######
+## Path
+######
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                                            # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"                          # This loads nvm bash_completion
 fi
 
+if [ -d "$HOME/.yarn/bin" ]; then
+    export PATH=$PATH:$HOME/.yarn/bin
+fi
+
+######
+## OS && Distribution Specific
+######
 case "$OSTYPE" in
     linux*)
         alias peekaboo='sudo netstat -plunt'                                                    # Show network connections with options PID, listening sockets, udp, numeric address, tcp
