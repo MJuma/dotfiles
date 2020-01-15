@@ -38,7 +38,7 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     elif [ -f /usr/local/etc/bash_completion ]; then
         . /usr/local/etc/bash_completion
-    elif [ -f $(brew --prefix)/etc/bash_completion ]; then
+    elif [ type brew &> /dev/null ] && [ -f $(brew --prefix)/etc/bash_completion ]; then
         . $(brew --prefix)/etc/bash_completion
     fi
 fi
