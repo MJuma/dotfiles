@@ -1,2 +1,4 @@
-Enable-WindowsOptionalFeature -Online -FeatureName containers -All
-Enable-WindowsOptionalFeature -Online -All -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart -WarningAction SilentlyContinue
+Enable-WindowsOptionalFeature -Online -All -NoRestart -WarningAction SilentlyContinue -FeatureName "Microsoft-Windows-Subsystem-Linux"
+Enable-WindowsOptionalFeature -Online -All -NoRestart -WarningAction SilentlyContinue -FeatureName "VirtualMachinePlatform"
+Enable-WindowsOptionalFeature -Online -All -NoRestart -WarningAction SilentlyContinue -FeatureName "Microsoft-Hyper-V-All"
+Enable-WindowsOptionalFeature -Online -All -NoRestart -WarningAction SilentlyContinue -FeatureName "Containers"

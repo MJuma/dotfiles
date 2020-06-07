@@ -1,11 +1,9 @@
 # Show hidden files, Show protected OS files, Show file extensions
-Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
-
-# Expand explorer to the actual folder you're in
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
-
-# Adds things back in your left pane like recycle bin
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
+$explorerConfigRegistryKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+Set-ItemProperty $explorerConfigRegistryKey Hidden 1
+Set-ItemProperty $explorerConfigRegistryKey HideFileExt 0
+Set-ItemProperty $explorerConfigRegistryKey ShowSuperHidden 1
+Stop-Process -processname explorer
 
 # Opens PC to This PC, not quick access
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1

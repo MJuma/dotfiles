@@ -4,7 +4,6 @@ if (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
 }
 
 RefreshEnv
-Update-SessionEnvironment
 
 # Install Chocolatey packages
 cinst 7zip.install `

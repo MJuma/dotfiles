@@ -1,4 +1,4 @@
-## Check for root
+#Requires -RunAsAdministrator
 
 # Remove Windows Default Bloatware
 .\RemoveDefaultApps.ps1
