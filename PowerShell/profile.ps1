@@ -21,6 +21,7 @@ Set-PSDebug -Strict
 Import-Module Get-ChildItemColor
 Import-Module 'posh-git'
 Import-Module 'oh-my-posh'
+Import-Module PSReadLine
 
 # Set PowerShell prompt theme
 Set-Theme Custom
