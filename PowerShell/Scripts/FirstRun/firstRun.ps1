@@ -28,6 +28,9 @@ C:\Workspace\Other\fonts\install.ps1
 # Configure PowerShellCore
 pwsh.exe -File .\PowerShellCore.ps1
 
+# Clone dotfiles repo
+git clone https://github.com/MJuma/dotfiles.git $HOME\dotfiles
+
 # Symbolic link PowerShell dotfiles directory
 New-Item $HOME\Documents\PowerShell -ItemType SymbolicLink -Value $HOME\dotfiles\PowerShell
 # Symbolic link gitconfig
