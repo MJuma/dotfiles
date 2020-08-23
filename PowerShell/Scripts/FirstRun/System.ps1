@@ -2,14 +2,14 @@
 $explorerConfigRegistryKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
 Set-ItemProperty $explorerConfigRegistryKey Hidden 1
 Set-ItemProperty $explorerConfigRegistryKey HideFileExt 0
-Set-ItemProperty $explorerConfigRegistryKey ShowSuperHidden 1
+#Set-ItemProperty $explorerConfigRegistryKey ShowSuperHidden 1
 Stop-Process -processname explorer
 
 # Opens PC to This PC, not quick access
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1
 
-# Taskbar where window is open for multi-monitor
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
+# Show taskbar buttons on all taskbars
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 0
 
 # Disable Quick Access: Recent Files
 Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer -Name ShowRecent -Type DWord -Value 0

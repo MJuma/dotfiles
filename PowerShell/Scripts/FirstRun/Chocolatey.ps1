@@ -17,6 +17,7 @@ cinst 7zip.install `
     fiddler `
     firefox `
     git.install --package-parameters="'/GitAndUnixToolsOnPath /WindowsTerminal'" `
+    git-lfs.install `
     googlechrome `
     jetbrainstoolbox `
     jq `
@@ -32,6 +33,7 @@ cinst 7zip.install `
     psscriptanalyzer `
     spotify `
     sumatrapdf `
+    visualstudio2019enterprise `
     vlc `
     vscode `
     windirstat `
