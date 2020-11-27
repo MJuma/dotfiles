@@ -56,6 +56,7 @@ font-1 = NotoSans-Regular:size=12;2
 font-2 = "Monaco for Powerline"
 font-3 = "Material Design Icons:size=14;2"
 font-4 = FontAwesome:size=12;2
+font-5 = "Noto Mono for Powerline"
 
 modules-left = i3 right-spacer-dark spotify right-spacer-light
 modules-center =  
