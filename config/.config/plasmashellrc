@@ -3,7 +3,7 @@ DisplayPort-0 DisplayPort-1 Height 1440=451
 DisplayPort-0 DisplayPort-1 Width 2560=491
 
 [PlasmaRunnerManager]
-LaunchCounts=1 services_applications:qvidcap.desktop,2 services_applications:org.kde.filelight.desktop,1 services_applications:org.kde.kate.desktop,2 services_applications:kcm_lookandfeel.desktop,1 services_applications:visual-studio-code.desktop,1 services_applications:kwalletconfig5.desktop,1 services_applications:kcm_kscreen.desktop
+LaunchCounts=1 services_applications:qvidcap.desktop,2 services_applications:org.kde.filelight.desktop,1 services_applications:org.kde.kate.desktop,2 services_applications:kcm_lookandfeel.desktop,1 services_applications:visual-studio-code.desktop,1 services_applications:khotkeys.desktop,1 services_applications:kwalletconfig5.desktop,1 services_applications:kcm_kscreen.desktop
 
 [PlasmaTransientsConfig]
 PreloadWeight=0

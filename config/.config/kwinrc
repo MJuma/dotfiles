@@ -9,6 +9,11 @@ Id_1=e8fd93a8-23f2-433a-990a-6ef4d8459c24
 Number=1
 Rows=1
 
+[MouseBindings]
+CommandAll1=Nothing
+CommandAll2=Nothing
+CommandAll3=Nothing
+
 [NightColor]
 Active=true
 LatitudeAuto=47.6674

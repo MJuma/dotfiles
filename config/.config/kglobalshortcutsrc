@@ -24,8 +24,12 @@ display=Display\tMeta+P,Display\tMeta+P,Switch Display
 
 [khotkeys]
 _k_friendly_name=Custom Shortcuts Service
+{3c382ea8-c79e-4464-8cbb-939e7daeaa72}=Ctrl+Alt+Tab,none,Mouse Media
+{6c657342-2bf3-4cd2-8202-40a88e6ec5cf}=none,none,New Action
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=,none,Search
-{d9c90f14-b080-45f2-bec9-d4aacdea7fdf}=Ctrl+Alt+T,none,Launch Konsole
+{d72a770a-cde2-41de-9ebb-5be17e8fdc75}=none,none,New Action
+{d9c90f14-b080-45f2-bec9-d4aacdea7fdf}=Meta+T,none,Launch Konsole
+{faa4e787-1efa-4411-99f7-48e2f75a2d1d}=,none,Launch Konsole
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -214,11 +218,11 @@ _launch=Meta+.,Meta+.,Emoji Selector
 
 [org.kde.spectacle.desktop]
 ActiveWindowScreenShot=Meta+Print,Meta+Print,Capture Active Window
-CurrentMonitorScreenShot=,,Capture Current Monitor
+CurrentMonitorScreenShot=,none,Capture Current Monitor
 FullScreenScreenShot=Shift+Print,Shift+Print,Capture Entire Desktop
-RectangularRegionScreenShot=Meta+Shift+Print,Meta+Shift+Print,Capture Rectangular Region
+RectangularRegionScreenShot=Meta+Shift+Print\tMeta+Shift+S,Meta+Shift+Print,Capture Rectangular Region
 _k_friendly_name=Spectacle
-_launch=Print,Print,Spectacle
+_launch=Print,Print,Launch Spectacle
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
@@ -234,7 +238,7 @@ Turn Off Screen=none,none,Turn Off Screen
 _k_friendly_name=Power Management
 
 [plasmashell]
-_k_friendly_name=Plasma
+_k_friendly_name=Activity switching
 activate task manager entry 1=Meta+1,Meta+1,Activate Task Manager Entry 1
 activate task manager entry 10=,Meta+0,Activate Task Manager Entry 10
 activate task manager entry 2=Meta+2,Meta+2,Activate Task Manager Entry 2
@@ -254,8 +258,8 @@ cycleNextAction=none,none,Next History Item
 cyclePrevAction=none,none,Previous History Item
 edit_clipboard=none,none,Edit Contents...
 manage activities=Meta+Q,Meta+Q,Show Activity Switcher
-next activity=Meta+Tab,none,Walk through activities
-previous activity=Meta+Shift+Tab,none,Walk through activities (Reverse)
+next activity=Meta+Tab,Meta+Tab,Walk through activities
+previous activity=Meta+Shift+Tab,Meta+Shift+Tab,Walk through activities (Reverse)
 repeat_action=Ctrl+Alt+R,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
 show dashboard=Ctrl+F12,Ctrl+F12,Show Desktop
 show-barcode=none,none,Show Barcode...
@@ -268,7 +272,3 @@ toggle do not disturb=none,none,Toggle do not disturb
 [systemsettings.desktop]
 _k_friendly_name=System Settings
 _launch=Tools,Tools,System Settings
-
-[yakuake]
-_k_friendly_name=Yakuake
-toggle-window-state=F12,F12,Open/Retract Yakuake
