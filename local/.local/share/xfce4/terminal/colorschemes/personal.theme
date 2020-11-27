@@ -1,7 +1,7 @@
 [Scheme]
 Name=Personal Theme
 ColorPalette=rgb(59,66,82);rgb(191,97,106);rgb(163,190,140);rgb(235,203,139);rgb(129,161,193);rgb(180,142,173);rgb(137,208,186);rgb(229,233,240);rgb(76,86,106);rgb(179,85,94);rgb(147,174,124);rgb(219,187,123);rgb(113,145,177);rgb(166,128,159);rgb(125,187,168);rgb(209,213,220)
-FontName=Monaco for Powerline 10
+FontName=Noto Mono for Powerline 10
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
 MiscBellUrgent=FALSE
