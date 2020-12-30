@@ -10,9 +10,9 @@ export EDITOR='vim'                                                             
 ######
 ## Shell History
 ######
-export HISTCONTROL=ignoreboth                                                                   # Don't put duplicate lines or lines starting with space in the history.
-export HISTSIZE=10000                                                                           # Number of lines stored in memory for a running bash session
-export HISTFILESIZE=20000                                                                       # Number of lines stored in bash history file
+HISTCONTROL=ignoreboth                                                                          # Don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=10000                                                                                  # Number of lines stored in memory for a running bash session
+HISTFILESIZE=20000                                                                              # Number of lines stored in bash history file
 
 ######
 ## Path
