@@ -2,6 +2,7 @@
 	editor = vim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
     excludesfile = ~/.gitignore
+    pager = delta
 
 [web]
     browser = firefox
@@ -25,19 +26,48 @@
     changed = green
     untracked = red
 
+[pull]
+    rebase = true
+
 [push]
     default = simple
 
 [diff]
-	tool = vimdiff
+	tool = delta
     guitool = code
     
 [difftool]
     prompt = false
 
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = 'OneHalfDark'
+    plus-style = 'syntax "#333B2F"'
+    minus-style = 'syntax "#382F32"'
+    colorMoved = default
+    hyperlinks = false
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow
+    file-style = bold green
+    hunk-header-decoration-style = cyan
+
+[delta "line-numbers"]
+    line-numbers-left-style = white
+    line-numbers-right-style = white
+    line-numbers-zero-style = white
+    line-numbers-minus-style = red
+    line-numbers-plus-style = green
+
 [alias]
     # Show all of my configured aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+
+    # Start a new local repository and perform initial commit
+    this = !git init && git add . && git commmit -m \"Initial commit.\"
 
     # Delete a branch
     brdel = branch -D
@@ -51,14 +81,36 @@
     # Which files are receiving the most "love"
     churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
 
-    # View a pretty git log with branch tree
+    # Displays the commit logs using a branch graph representation
+    # Format:
+    # * <commit-hash> - (HEAD -> master) commit message (2 days ago) <Author Name>
+    # |\ 
+    # | * <commit-hash> - commit message (2 days ago) <Author Name>
+    # * | <commit-hash> - commit message (3 days ago) <Author Name>
+    # |/
+    # * <commit-hash> - (origin/master, origin/HEAD) commit message (4 days ago) <Author Name>
     graph = log --graph --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    ld = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=short
-    lf = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=relative --name-status
-    lr = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=relative
 
-    # Start a new local repository and perform initial commit
-    this = !git init && git add . && git commmit -m \"Initial commit.\"
+    # Displays the commit logs with dates in YYYY-MM-DD form
+    # Format:
+    # <commit-hash> YYYY-MM-DD commit message [Author Name]
+    ld = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=short
+
+    # Displays the commit logs using relative dates and breaking down each commit by the files changed
+    # Format:
+    # <commit-hash> 2 days ago commit message [Author Name]
+    # D     /path/to/file
+    # M     /path/to/file
+    #
+    # <commit-hash> 2 days ago commit message [Author Name]
+    # A     /path/to/file
+    # M     /path/to/file
+    lf = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=relative --name-status
+
+    # Displays the commit logs using relative dates
+    # Format:
+    # <commit-hash> 2 days ago commit message [Author Name]
+    lr = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=relative
 
     # Show all authers in repo
     authors = !sh -c 'git log --format="%aN" | sort -k 2 -u'
@@ -69,9 +121,20 @@
     # Displays user name and user email
     whoami = !git config --get user.name && git config --get user.email
 
-    changed = diff ORIG_HEAD..
-    deleted = log --diff-filter=D --summary
+    # SHow git config
     info = config --list
+
+    # Hard reset current branch
     nuke = !sh -c 'git reset --hard HEAD~$1' -
+
+    # Soft reset current branch
     unstage = reset HEAD
+
+    # Display the current origin url for the current branch
     origin = remote show origin
+
+    # Change branches using fuzzy finder
+    fbr = !git branch | fzf
+
+    # Fuzzy diff of current changes
+    fdiff = !git status -s  | fzf --no-sort --preview 'git diff --color=always {+2} | delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}' --preview-window 'right:nohidden:80%:wrap'

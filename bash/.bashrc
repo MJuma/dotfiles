@@ -19,42 +19,46 @@ case $- in
 esac
 
 ######
-## Environment Variables
-######
-export TZ="/usr/share/zoneinfo/America/Los_Angeles"         # Set timezone to PDT/PST
-
-######
 ## Shell Behavior
 ######
 shopt -s histappend                                         # Append to the history file, don't overwrite it
 shopt -s checkwinsize                                       # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s expand_aliases                                     # Aliases are expanded
 
-# Enable bash completion
+######
+## Bash Completion
+######
 if ! shopt -oq posix; then
-    if [ -r /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -r /etc/bash_completion ]; then
-        . /etc/bash_completion
-    elif [ -f /usr/local/etc/bash_completion ]; then
-        . /usr/local/etc/bash_completion
-    elif [ type brew &> /dev/null ] && [ -f $(brew --prefix)/etc/bash_completion ]; then
-        . $(brew --prefix)/etc/bash_completion
+    [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+    [ -r /etc/bash_completion ] && . /etc/bash_completion
+    [ -r /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+    [ type brew &> /dev/null ] && [ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
+    [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
+    [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
+
+    if [ -d /etc/bash_completion.d ]; then
+        for bcfile in /etc/bash_completion.d/* ; do
+            [ -f "$bcfile" ] && . $bcfile
+        done
     fi
+
+    if [ -d ~/.bash_completion.d ]; then
+        for bcfile in ~/.bash_completion.d/* ; do
+            [ -f "$bcfile" ] && . $bcfile
+        done
+    fi
+
+    if [ ! -r "$HOME/.config/.git-completion.bash" ] && [ type curl &> /dev/null ]; then
+        curl -fLo "$HOME/.config/.git-completion.bash" --create-dirs https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    fi
+    [ -r "$HOME/.config/.git-completion.bash" ] && . "$HOME/.config/.git-completion.bash"
 fi
 complete -cf sudo
 
-######
-## Shell History
-######
-HISTCONTROL=ignoreboth                                      # Don't put duplicate lines or lines starting with space in the history.
-HISTSIZE=10000                                              # Number of lines stored in memory for a running bash session
-HISTFILESIZE=20000                                          # Number of lines stored in bash history file
 
 ######
-## Shell Config
+## Shell Config (window title of X terminals)
 ######
-# Set window title of X terminals
 case ${TERM} in 
 	xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
 		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
@@ -115,72 +119,17 @@ fi
 ######
 ## Aliases
 ######
-alias sudo="sudo -E"                                                                                    # Preserve environment variables when calling sudo
-alias cp="cp -i"                                                                                        # Confirm before overwriting files and directories
-alias df='df -h'                                                                                        # Human readable disk space usage
-alias free='free -m'                                                                                    # Free memory and swap in Mebibytes
-alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'        # Show free memory, uptime & ps updated every 3s
-alias nano='nano -c -m'                                                                                 # nano with cursor position shown and mouse support enabled
-alias ping='ping -c 5'                                                                                  # Ping address 5 times
-alias grep='grep --colour=auto'                                                                         # Colorize grep
-alias egrep='egrep --colour=auto'                                                                       # Colorize egrep
-alias fgrep='fgrep --colour=auto'                                                                       # Colorize fgrep
-alias ..='cd ..'                                                                                        # Go up a directory
-alias ...='cd ../..'                                                                                    # Go up two directories
-alias cmon='sudo $(history -p !!)'                                                                      # Redo last command as root
-alias histg="history | grep"                                                                            # Search through comman history: histg [keyword]
-alias t='(tmux has-session 2>/dev/null && tmux attach) || (tmux new-session)'                           # Open previous tmux session or new one if none others exist
-alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'                                               # Create hexdump of /dev/urandom to look busy
-alias prettyjson='python -m json.tool'						                                            # Pretty print json
-alias npmg='npm list -g --depth=0'						                                                # List all globally install npm packages
-alias ascii="man ascii"                                                                                 # man page listing the ascii codes
-alias nethack='telnet nethack.alt.org'                                                                  # Telnet game
+source "$HOME/.config/bash/aliases.sh"
 
 ######
 ## Functions
 ######
-mcd() { mkdir -p "$1" && cd "$1";}                                                                      # Make a directory and cd into it
-cls() { cd "$1" && ls;}                                                                                 # cd into a directory and ls it
-backup() { cp -- "$1"{,.bak};}                                                                          # Backup a file to file.bak
-md5check() { md5sum "$1" | grep "$2";}                                                                  # Compare md5sum of file to key
-checkport() { lsof -i:$1; }                                                                             # Check for any programs using a given port   
-randfile() { find $1 -type f | shuf -n 1; }                                                             # Returns a random file within a given dir recursively
-wttr() { curl -s "wttr.in/$1"; }                                                                        # Returns the weather in the given location   
-
-# Extract an archive file: extract [file]
-extract() { 
-    if [ -f $1 ] ; then 
-      case $1 in 
-        *.tar.bz2)   tar xvjf $1    ;; 
-        *.tar.gz)    tar xvzf $1    ;; 
-        *.bz2)       bunzip2 $1     ;; 
-        *.rar)       unrar e $1     ;; 
-        *.gz)        gunzip $1      ;; 
-        *.tar)       tar xvf $1     ;; 
-        *.tbz2)      tar xvjf $1    ;; 
-        *.tgz)       tar xvzf $1    ;; 
-        *.zip)       unzip $1       ;; 
-        *.Z)         uncompress $1  ;; 
-        *.7z)        7z x $1        ;; 
-        *)     echo "'$1' cannot be extracted via extract()" ;; 
-         esac 
-     else 
-         echo "'$1' is not a valid file" 
-     fi 
-}
+source "$HOME/.config/bash/functions.sh"
 
 ######
-## Path
+## Variables
 ######
-if [ -d "$HOME/.nvm" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                                            # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"                          # This loads nvm bash_completion
-fi
-
-if [ -d "$HOME/.yarn/bin" ]; then
-    export PATH=$PATH:$HOME/.yarn/bin
-fi
+source "$HOME/.config/bash/variables.sh"
 
 ######
 ## OS && Distribution Specific
@@ -217,8 +166,6 @@ case "$OSTYPE" in
         esac
         ;;
     darwin*)
-        eval $(thefuck --alias)
-        
         alias ls='ls -G'                                                                        # Colorize ls
         alias peekaboo='sudo netstat -p tcp -van | grep LISTEN'                                 # Show network connections with options PID, listening sockets, udp, numeric address, tcp
         alias update='brew update && brew upgrade'                                              # Update homebrew formulae and upgrade packages

@@ -1,10 +1,3 @@
-! ----------------------------------------------------------------------------
-! file:     ~/.Xresources
-! author:   Mohammad Juma
-! modified: October 2018
-! vim: set fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
-! ----------------------------------------------------------------------------
-
 ! ------------------------------------------------------------------------------
 ! Xcursor Config
 ! ------------------------------------------------------------------------------
@@ -37,9 +30,9 @@ XTerm*rightScrollBar:     true
 XTerm*jumpScroll:         true
 XTerm*multiScroll:        true
 XTerm*toolBar:            false
-XTerm*background:         #6aa7a5
-XTerm*foreground:         #6aa7a5
-XTerm*pointerColor:       #16A085
+XTerm*background:         #353a44
+XTerm*foreground:         #d9d9d9
+XTerm*pointerColor:       #d9d9d9
 XTerm*faceName:           Fixed
 XTerm*faceSize:           11
 XTerm*selectToClipboard:  true
@@ -48,41 +41,46 @@ XTerm*selectToClipboard:  true
 ! Color Config
 ! ------------------------------------------------------------------------------
 ! special
-*.foreground:   #d8dee8
-*.background:   #2f343f
-*.cursorColor:  #b48ead
+*.foreground:  #d9d9d9
+*.background:  #353a44
+*.cursorColor: #d9d9d9
 
 ! black
-*.color0  : #3B4252
-*.color8  : #4C566A
+*.color0:      #151515
+*.color8:      #636363
 
 ! red
-*.color1  : #BF616A
-*.color9  : #B3555E
+*.color1:      #bc5653
+*.color9:      #bc5653
 
 ! green
-*.color2  : #A3BE8C
-*.color10 : #93AE7C
+*.color2:      #909d63
+*.color10:     #a0ac77
 
 ! yellow
-*.color3  : #EBCB8B
-*.color11 : #DBBB7B
+*.color3:      #ebc17a
+*.color11:     #ebc17a
 
 ! blue
-*.color4  : #81A1C1
-*.color12 : #7191B1
+*.color4:      #6a8799
+*.color12:     #7eaac7
 
 ! magenta
-*.color5  : #B48EAD
-*.color13 : #A6809F
+*.color5:      #b06698
+*.color13:     #b06698
 
 ! cyan
-*.color6  : #89D0BA
-*.color14 : #7DBBA8
+*.color6:      #c9dfff
+*.color14:     #acbbd0
 
 ! white
-*.color7  : #E5E9F0
-*.color15 : #D1D5DC
+*.color7:      #d9d9d9
+*.color15:     #f7f7f7
+
+! Bold, Italic, Underline
+*.colorBD:     #d9d9d9
+!*.colorIT:
+!*.colorUL:
 
 ! ------------------------------------------------------------------------------
 ! URxvt Settings
@@ -96,16 +94,15 @@ URxvt.geometry: 85x25
 URxvt.saveLines: 8192
 URxvt.visualBell: true
 URxvt*termName: rxvt
-URxvt.iconFile: /home/slapshot/.icons/Faenza/apps/64/utilities-terminal.png
 
 URxvt.perl-ext-common:  default,matcher,vtwheel
-URxvt.urlLauncher:      iceweasel
+URxvt.urlLauncher:      firefox
 URxvt.matcher.button:   1
 
 !URxvt.transparent:true
-URxvt.background:  #1e1e1e
-URxvt.foreground:  white
-URxvt.cursorColor: #ffffff
+URxvt.background:  #d9d9d9
+URxvt.foreground:  #353a44
+URxvt.cursorColor: #d9d9d9
 
 URxvt*font:                 xft:Noto Mono for Powerline:regular:size=12
 URxvt*imFont:               xft:Noto Mono for Powerline:regular:size=12
@@ -114,29 +111,29 @@ URxvt*italicFont:           xft:Noto Mono for Powerline:italic:size=12
 URxvt*boldItalicFont:       xft:Noto Mono for Powerline:bold:italic:size=12
 
 !black
-URxvt*color0:      #000000
-URxvt*color8:      #555753
+URxvt*color0:      #151515
+URxvt*color8:      #636363
 !red
-URxvt*color1:      #CC0000
-URxvt*color9:      #EF2929
+URxvt*color1:      #bc5653
+URxvt*color9:      #bc5653
 !green
-URxvt*color2:      #4E9A06
-URxvt*color10:     #8AE234
+URxvt*color2:      #909d63
+URxvt*color10:     #a0ac77
 !yellow
-URxvt*color3:      #C4A000
-URxvt*color11:     #FCE94F
+URxvt*color3:      #ebc17a
+URxvt*color11:     #ebc17a
 !blue
-URxvt*color4:      #3465A4
-URxvt*color12:     #729FCF
+URxvt*color4:      #6a8799
+URxvt*color12:     #7eaac7
 !magenta
-URxvt*color5:      #75507B
-URxvt*color13:     #AD7FA8
+URxvt*color5:      #b06698
+URxvt*color13:     #b06698
 !cyan
-URxvt*color6:      #06989A
-URxvt*color14:     #34E2E2
+URxvt*color6:      #c9dfff
+URxvt*color14:     #acbbd0
 !white
-URxvt*color7:      #D3D7CF
-URxvt*color15:     #ECEDEE
+URxvt*color7:      #d9d9d9
+URxvt*color15:     #f7f7f7
 
 ! ------------------------------------------------------------------------------
 ! ROFI Color theme
