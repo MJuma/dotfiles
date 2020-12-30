@@ -33,8 +33,6 @@ if ! shopt -oq posix; then
     [ -r /etc/bash_completion ] && . /etc/bash_completion
     [ -r /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
     [ type brew &> /dev/null ] && [ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
-    [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
-    [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 
     if [ -d /etc/bash_completion.d ]; then
         for bcfile in /etc/bash_completion.d/* ; do
@@ -150,6 +148,9 @@ case "$OSTYPE" in
                 alias search='yay -Ss'                                                          # Search package list for a package
                 alias info='yay -Si'                                                            # Search package list for a package
                 alias pkstats='yay -P --stats'                                                  # Shows statistics for installed packages and system health
+
+                [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash       # fzf bash completion
+                [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash   # fzf key bindings
                 ;;
             debian* | ubuntu* | elementary*)
                 alias get='sudo apt install'                                                    # Get a package
@@ -159,6 +160,10 @@ case "$OSTYPE" in
                 alias clean='sudo apt autoremove'                                               # Removes unused packages
                 alias search='apt-cache search'                                                 # Search repository for a package
                 alias policy='apt-cache policy'                                                 # Show priority selection for a package
+                alias fd=fdfind                                                                 # Map fd to fd from fdfind in debian
+
+                [ -r /usr/share/doc/fzf/examples/completion.bash ] && . /usr/share/doc/fzf/examples/completion.bash         # fzf bash completion
+                [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash     # fzf key bindings
                 ;;
             *)
                 echo "Unknown Lunux Distribution: $(lsb_release -is)"
