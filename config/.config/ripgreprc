@@ -6,6 +6,8 @@
 --type-add
 web:*.{html,css,js,ts,tsx,jsx,sass,scss,less,json}*
 
+--glob=!*.res.json
+
 # Set the colors.
 --colors=line:fg:yellow
 --colors=line:style:bold

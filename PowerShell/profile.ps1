@@ -22,9 +22,37 @@ Import-Module Get-ChildItemColor
 Import-Module 'posh-git'
 Import-Module 'oh-my-posh'
 Import-Module PSReadLine
+Import-Module PSFzf
 
 # Set PowerShell prompt theme
 Set-Theme Custom
+
+# Configure PSFzf bindings
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+Set-PsFzfOption -TabExpansion
+
+# Set environment variables
+$FD_OPTIONS="--hidden --absolute-path --exclude .git --exclude node_modules"
+$env:RIPGREP_CONFIG_PATH = "$env:HOME\dotfiles\config\.config\ripgreprc";
+$env:FZF_TMUX_OPTS = "-r 40%";
+$env:FZF_DEFAULT_OPTS = "--extended
+--multi
+--height=40%
+--layout=reverse
+--bind='ctrl-p:toggle-preview,ctrl-j:preview-down,ctrl-k:preview-up,ctrl-o:execute(code {1})'
+--preview='bat --style=numbers --color=always {}'
+--preview-window='right:hidden:wrap'
+--border
+--color=dark
+--color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+--color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
+";
+$env:FZF_DEFAULT_COMMAND = " (rg --files --line-number --hidden --smart-case) || (fd --type f --type l $FD_OPTIONS)";
+$env:FZF_CTRL_T_COMMAND = "fd $FD_OPTIONS";
+$env:FZF_ALT_C_COMMAND = "fd --type d $FD_OPTIONS";
+$env:BAT_PAGER = "less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse";
+$env:BAT_THEME = "OneHalfDark";
 
 # Function for creating bash style aliases
 function BashStyleAlias([string] $name, [string] $command) {

@@ -7,3 +7,4 @@ Install-Module -Name 'posh-git'                         # Git info in PowerShell
 Install-Module -Name 'oh-my-posh'                       # Themes for PowerShell prompt
 Install-Module -Name PSScriptAnalyzer                   # Linter for PowerShell scripts
 Install-Module -Name Get-ChildItemColor -AllowClobber   # Colorize directory listings
+Install-Module -Name PSFzf                              # PowerShell fzf moduel
