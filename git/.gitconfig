@@ -35,7 +35,7 @@
 [diff]
 	tool = delta
     guitool = code
-    
+
 [difftool]
     prompt = false
 
@@ -62,6 +62,12 @@
     line-numbers-minus-style = red
     line-numbers-plus-style = green
 
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
 [alias]
     # Show all of my configured aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
@@ -74,17 +80,17 @@
 
     # Show branch history for all branches
     brhist = !git for-each-ref --sort=committerdate --format='%(refname:short) *  %(authorname) * %(committerdate:relative)' refs/remotes/ | column -t -s '*'
-    
+
     # Save a repo as a tarball
     export = archive -o latest.tar.gz -9 --prefix=latest/
- 
+
     # Which files are receiving the most "love"
     churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
 
     # Displays the commit logs using a branch graph representation
     # Format:
     # * <commit-hash> - (HEAD -> master) commit message (2 days ago) <Author Name>
-    # |\ 
+    # |\
     # | * <commit-hash> - commit message (2 days ago) <Author Name>
     # * | <commit-hash> - commit message (3 days ago) <Author Name>
     # |/
