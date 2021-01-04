@@ -36,6 +36,6 @@ New-Item $HOME\Documents\PowerShell -ItemType SymbolicLink -Value $HOME\dotfiles
 # Symbolic link gitconfig
 New-Item $HOME\.gitconfig -ItemType SymbolicLink -Value $HOME\dotfiles\git\.gitconfig
 
-# Configure Command Prompt
+# Configure Command Prompt (https://kb.iu.edu/d/aamm)
 # PROMPT = $E[1;37;44m $T$H$H$H $E[0;34;42m$E[0;30;42m $P $E[0;32;40m$_$E[1;30;40m$+$E[0;34;40m❯ $E[1;37;40m
 REG ADD "HKCU\Software\Microsoft\Command Processor" /v Autorun /t REG_EXPAND_SZ /d "%UserProfile%\dotfiles\PowerShell\doskey.cmd" /f

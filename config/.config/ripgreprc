@@ -6,7 +6,7 @@
 --type-add
 web:*.{html,css,js,ts,tsx,jsx,sass,scss,less,json}*
 
---glob=!*.res.json
+--glob=!*.resjson
 
 # Set the colors.
 --colors=line:fg:yellow
@@ -17,5 +17,4 @@ web:*.{html,css,js,ts,tsx,jsx,sass,scss,less,json}*
 --colors=match:bg:yellow
 --colors=match:style:nobold
 
-# Because who cares about case!?
 --smart-case

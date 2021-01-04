@@ -52,7 +52,7 @@ $env:FZF_DEFAULT_COMMAND = " (rg --files --line-number --hidden --smart-case) ||
 $env:FZF_CTRL_T_COMMAND = "fd $FD_OPTIONS";
 $env:FZF_ALT_C_COMMAND = "fd --type d $FD_OPTIONS";
 $env:BAT_PAGER = "less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse";
-$env:BAT_THEME = "OneHalfDark";
+$env:BAT_THEME = "Coldark-Dark";
 
 # Function for creating bash style aliases
 function BashStyleAlias([string] $name, [string] $command) {

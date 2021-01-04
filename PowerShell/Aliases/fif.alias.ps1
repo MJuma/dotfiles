@@ -6,5 +6,5 @@
 #>
 
 function fif([string]$search) {
-    rg --no-messages -n $search -T | fzf --delimiter : --height=100% --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' --preview-window='+{2}-/2:nohidden'
+    rg --no-messages -n $search | fzf --delimiter : --height=100% --preview 'bat --style=numbers --color=always --theme="Coldark-Dark" --highlight-line {2} {1}' --preview-window='60%:+{2}-/2:nohidden'
 }
