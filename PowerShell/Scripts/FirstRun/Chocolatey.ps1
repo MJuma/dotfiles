@@ -8,29 +8,35 @@ RefreshEnv
 # Install Chocolatey packages
 cinst 7zip.install `
     azure-cli `
+    azure-data-studio `
     azurepowershell `
+    bat `
     chromium `
     curl `
+    delta `
     docker-desktop `
     dotnetcore-sdk `
-    everything `
     fiddler `
     firefox `
+    fzf `
     git.install --package-parameters="'/GitAndUnixToolsOnPath /WindowsTerminal'" `
     git-lfs.install `
     googlechrome `
     jetbrainstoolbox `
     jq `
+    imagemagick `
     microsoft-teams `
     microsoft-windows-terminal `
     microsoftazurestorageexplorer `
     nodejs-lts `
     nuget.commandline `
     office365business `
+    pandoc `
     postman `
     powershell-core `
     powertoys `
     psscriptanalyzer `
+    ripgrep `
     spotify `
     sumatrapdf `
     visualstudio2019enterprise `
