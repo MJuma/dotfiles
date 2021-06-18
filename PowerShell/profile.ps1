@@ -19,13 +19,13 @@ Set-PSDebug -Strict
 
 # Import PowerShell Modules
 Import-Module Get-ChildItemColor
-Import-Module 'posh-git'
 Import-Module 'oh-my-posh'
 Import-Module PSReadLine
 Import-Module PSFzf
 
 # Set PowerShell prompt theme
-Set-Theme Custom
+Set-PoshPrompt -Theme ~\dotfiles\PowerShell\PoshThemes\Custom.json
+# Set-Theme Custom
 
 # Configure PSFzf bindings
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
@@ -51,8 +51,9 @@ $env:FZF_DEFAULT_OPTS = "--extended
 $env:FZF_DEFAULT_COMMAND = " (rg --files --line-number --hidden --smart-case) || (fd --type f --type l $FD_OPTIONS)";
 $env:FZF_CTRL_T_COMMAND = "fd $FD_OPTIONS";
 $env:FZF_ALT_C_COMMAND = "fd --type d $FD_OPTIONS";
-$env:BAT_PAGER = "less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse";
+$env:BAT_PAGER = "less --RAW-CONTROL-CHARS --quit-if-one-screen";
 $env:BAT_THEME = "Coldark-Dark";
+$env:DELTA_PAGER = "less --RAW-CONTROL-CHARS --quit-if-one-screen";
 
 # Function for creating bash style aliases
 function BashStyleAlias([string] $name, [string] $command) {
