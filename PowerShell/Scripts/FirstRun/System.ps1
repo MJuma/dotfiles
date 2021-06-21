@@ -76,5 +76,8 @@ Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\AppModelU
 # Dont prompt to 'Look for an app in the Store'
 Set-ItemProperty -Path $explorerConfigRegistryKey -Name NoUseStoreOpenWith -Type DWord -Value 1
 
+# Configure Windows to use UTC and not localtime
+Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation -Name RealTimeIsUniversal -Value 1
+
 # Restart explorer
 Stop-Process -processname explorer
