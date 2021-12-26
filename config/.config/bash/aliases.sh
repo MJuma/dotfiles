@@ -30,3 +30,7 @@ if  [ type xclip &> /dev/null ]; then
     alias pbpaste='xclip -o -selection clipboard'                                                       # Paste selection from clipboard
     alias pbclear='echo "" | xclip -i -selection clipboard'                                             # Clear clipboard
 fi
+
+if [ $DESKTOP_SESSION == "plasma" ]; then
+    alias kder='kquitapp5 plasmashell || killall plasmashell && kstart5 plasmashell'                    # Restart KDE DE
+fi

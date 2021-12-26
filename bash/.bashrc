@@ -152,7 +152,7 @@ case "$OSTYPE" in
                 [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash       # fzf bash completion
                 [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash   # fzf key bindings
                 ;;
-            debian* | ubuntu* | elementary*)
+            debian* | ubuntu* )
                 alias get='sudo apt install'                                                    # Get a package
                 alias remove='sudo apt purge'                                                   # Remove a package
                 alias update='sudo apt update && sudo apt-get upgrade'                          # Update repository index and upgrade packages
@@ -161,6 +161,8 @@ case "$OSTYPE" in
                 alias search='apt-cache search'                                                 # Search repository for a package
                 alias policy='apt-cache policy'                                                 # Show priority selection for a package
                 alias fd=fdfind                                                                 # Map fd to fd from fdfind in debian
+                alias bat=batcat                                                                # Map bat to bat from batcat in debian
+                alias cat=batcat                                                                # Map cat to bat
 
                 [ -r /usr/share/doc/fzf/examples/completion.bash ] && . /usr/share/doc/fzf/examples/completion.bash         # fzf bash completion
                 [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash     # fzf key bindings
