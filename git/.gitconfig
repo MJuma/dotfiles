@@ -4,6 +4,9 @@
     excludesfile = ~/.gitignore
     pager = delta
 
+[init]
+    defaultBranch = master
+
 [web]
     browser = firefox
 
@@ -79,7 +82,7 @@
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
 
     # Start a new local repository and perform initial commit
-    this = !git init && git add . && git commmit -m \"Initial commit.\"
+    this = !git init && git add . && git commit -m \"Initial commit.\"
 
     # Delete a branch
     brdel = branch -D
