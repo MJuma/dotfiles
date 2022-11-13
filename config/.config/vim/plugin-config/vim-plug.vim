@@ -12,12 +12,12 @@ Plug 'itchyny/lightline.vim'                                                    
 Plug 'tpope/vim-fugitive'                                                       " git integration
 Plug 'psliwka/vim-smoothie'                                                     " smooth scrolling
 Plug 'preservim/nerdtree'                                                       " file system explorer
-Plug 'junegunn/fzf'                                                             " fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }                             " fzf
 Plug 'tpope/vim-commentary'                                                     " comment out code
 Plug 'jiangmiao/auto-pairs'                                                     " auto add closing brackets and braces
 Plug 'alvan/vim-closetag'                                                       " auto add closing HTML tabs
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                                 " intellisense
-Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release' }                      " fzf preview
+Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/rpc' }                  " fzf preview
 Plug 'junegunn/gv.vim'                                                          " git commit browser
 Plug 'rhysd/git-messenger.vim'                                                  " git line commit blame
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }            " shows keymappings for vim
