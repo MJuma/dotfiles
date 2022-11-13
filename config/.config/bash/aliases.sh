@@ -20,6 +20,8 @@ alias prettyjson='python -m json.tool'						                                    
 alias npmg='npm list -g --depth=0'						                                                # List all globally install npm packages
 alias ascii="man ascii"                                                                                 # man page listing the ascii codes
 alias nethack='telnet nethack.alt.org'                                                                  # Telnet game
+alias dotfiles='code ~/dotfiles'                                                                        # Opens the dotfiles repo in a text editor
+alias hosts='code /etc/hosts'                                                                           # Opens the hosts file in a repo
 
 if [ -x /usr/bin/bat ]; then
     alias cat='bat --paging=never'                                                                      # Swap cat with bat
