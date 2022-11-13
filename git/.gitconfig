@@ -3,6 +3,7 @@
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
     excludesfile = ~/.gitignore
     pager = delta
+	autocrlf = input
 
 [init]
     defaultBranch = master
@@ -153,3 +154,12 @@
 
     # Fuzzy diff of current changes
     fdiff = !git status -s  | fzf --no-sort --preview 'git diff --color=always {+2} | delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}' --preview-window 'right:nohidden:80%:wrap'
+
+    # Delete stale local references to remote branches
+    rprune = remote prune origin
+
+    # Fetch remote references and delete local references to remote branches
+    fprune = fetch --prune
+
+    # Show remote origin config
+    show = remote show origin
