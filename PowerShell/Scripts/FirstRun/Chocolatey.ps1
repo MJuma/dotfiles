@@ -31,6 +31,7 @@ cinst 7zip.install `
     nodejs-lts `
     nuget.commandline `
     office365business `
+    oh-my-posh `
     pandoc `
     postman `
     powershell-core `

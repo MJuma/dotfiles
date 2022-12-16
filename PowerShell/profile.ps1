@@ -19,13 +19,11 @@ Set-PSDebug -Strict
 
 # Import PowerShell Modules
 Import-Module Get-ChildItemColor
-Import-Module 'oh-my-posh'
 Import-Module PSReadLine
 Import-Module PSFzf
 
 # Set PowerShell prompt theme
-Set-PoshPrompt -Theme ~\dotfiles\PowerShell\PoshThemes\Custom.json
-# Set-Theme Custom
+oh-my-posh init pwsh --config ~\dotfiles\PowerShell\PoshThemes\Custom.json | Invoke-Expression
 
 # Configure PSFzf bindings
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
