@@ -142,9 +142,9 @@ case "$OSTYPE" in
         case "$(lsb_release -is | awk '{print tolower($0)}')" in
             arch* | manjaro*)
                 alias get='yay -S'                                                              # Get a package
-                alias remove='yay -Ru'                                                          # Remove a package
+                alias remove='yay -Rsu'                                                         # Remove a package
                 alias update='yay -Syyu'                                                        # Update package list and upgrade packages
-                alias clean='yay -Sc'                                                           # Removes unused packages
+                alias clean='yay -Sc && yay -Qtdq | yay -Rns -'                                 # Removes unused packages and removes unused orphaned packages
                 alias search='yay -Ss'                                                          # Search package list for a package
                 alias info='yay -Si'                                                            # Search package list for a package
                 alias pkstats='yay -P --stats'                                                  # Shows statistics for installed packages and system health

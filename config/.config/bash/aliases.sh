@@ -25,6 +25,7 @@ alias hosts='code /etc/hosts'                                                   
 
 if [ -x /usr/bin/bat ]; then
     alias cat='bat --paging=never'                                                                      # Swap cat with bat
+    alias man='man --pager=bat'                                                                         # Page man using bat
 fi
 
 if  [ type xclip &> /dev/null ]; then
