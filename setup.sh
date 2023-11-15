@@ -48,10 +48,10 @@ validate_dependencies() {
     dependencies=( "curl" "stow" )
     for i in "${dependencies[@]}"
     do
-        command -v $i >/dev/null 2>&1 || { 
-            echo -e "\n${red}ERROR:${normal} Dependency missing: ${yellow}$i${normal}"; 
+        command -v $i >/dev/null 2>&1 || {
+            echo -e "\n${red}ERROR:${normal} Dependency missing: ${yellow}$i${normal}";
             echo -e "Install dependency and rerun to continue\n"
-            exit 1; 
+            exit 1;
         }
     done
 }
@@ -91,16 +91,16 @@ backup_old_files() {
 declare -A linkedFiles
 stow_dotfiles() {
     IFS=$'\n'
-    dotfiles=($(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' -printf "%f\n" | grep -v "PowerShell")) 
+    dotfiles=($(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' -printf "%f\n" | grep -v "PowerShell"))
     unset IFS
     for dotfile in "${dotfiles[@]}"
     do
         if [[ $dryRun = true ]]; then
-            linkedFile=($(stow -n -v $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
+            linkedFile=($(stow -n -v -t $HOME $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
         else
-            linkedFile=($(stow -v $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
+            linkedFile=($(stow -v -t $HOME $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
         fi
-        
+
         i=0
         while [[ -v "linkedFile[$i]" ]]
         do
