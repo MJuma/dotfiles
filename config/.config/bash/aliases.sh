@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alias sudo="sudo -E"                                                                                    # Preserve environment variables when calling sudo
+alias sudo="sudo -E "                                                                                   # Preserve environment variables when calling sudo
 alias cp="cp -i"                                                                                        # Confirm before overwriting files and directories
 alias df='df -h'                                                                                        # Human readable disk space usage
 alias free='free -m'                                                                                    # Free memory and swap in Mebibytes
