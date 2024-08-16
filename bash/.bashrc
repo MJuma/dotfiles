@@ -25,6 +25,18 @@ shopt -s histappend                                         # Append to the hist
 shopt -s checkwinsize                                       # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s expand_aliases                                     # Aliases are expanded
 
+if [[ $CODESPACES ]]; then
+    HISTFILEBASE=/workspaces/.codespaces/.persistedshare
+else
+    HISTFILEBASE=$HOME
+fi
+
+if [[ $TMUX_PANE ]]; then
+    HISTFILE=$HISTFILEBASE/.bash_history_tmux_${TMUX_PANE:1}        # Set a differetn history file for each tmux pane
+else
+    HISTFILE=$HISTFILEBASE/.bash_history
+fi
+
 ######
 ## Bash Completion
 ######
@@ -59,13 +71,13 @@ complete -cf sudo
 ######
 case ${TERM} in 
 	xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+		PROMPT_COMMAND='history -a;history -n;echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
 		;;
 	screen*)
-		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+		PROMPT_COMMAND='history -a;history -n;echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
 		;;
     *)        
-        PROMPT_COMMAND='history -a'
+        PROMPT_COMMAND='history -a;history -n'
         ;;
 esac
 
