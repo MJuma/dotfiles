@@ -146,57 +146,21 @@ source "$HOME/.config/bash/variables.sh"
 ######
 case "$OSTYPE" in
     linux*)
-        alias peekaboo='sudo netstat -plunt'                                                    # Show network connections with options PID, listening sockets, udp, numeric address, tcp
-        alias ls='ls --color=auto'                                                              # Colorize ls
-        alias xres="xrdb -merge ~/.Xresources"                                                  # Reload ~/.Xresources
-        alias rebuild-fonts="fc-cache -f -v"                                                    # Rebuilds font cache
-
         case "$(lsb_release -is | awk '{print tolower($0)}')" in
             arch* | manjaro*)
-                alias get='yay -S'                                                              # Get a package
-                alias remove='yay -Rsu'                                                         # Remove a package
-                alias update='yay -Syyu'                                                        # Update package list and upgrade packages
-                alias clean='yay -Sc && yay -Qtdq | yay -Rns -'                                 # Removes unused packages and removes unused orphaned packages
-                alias search='yay -Ss'                                                          # Search package list for a package
-                alias info='yay -Si'                                                            # Search package list for a package
-                alias pkstats='yay -P --stats'                                                  # Shows statistics for installed packages and system health
-
                 [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash       # fzf bash completion
                 [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash   # fzf key bindings
                 ;;
             debian* | ubuntu* )
-                alias get='sudo apt install'                                                    # Get a package
-                alias remove='sudo apt purge'                                                   # Remove a package
-                alias update='sudo apt update && sudo apt-get upgrade'                          # Update repository index and upgrade packages
-                alias upgrade='sudo apt full-upgrade'                                           # Upgrade packages with auto-handling of dependencies
-                alias clean='sudo apt autoremove'                                               # Removes unused packages
-                alias search='apt-cache search'                                                 # Search repository for a package
-                alias policy='apt-cache policy'                                                 # Show priority selection for a package
-                alias fd=fdfind                                                                 # Map fd to fd from fdfind in debian
-                alias bat=batcat                                                                # Map bat to bat from batcat in debian
-                alias cat=batcat                                                                # Map cat to bat
-
                 [ -r /usr/share/doc/fzf/examples/completion.bash ] && . /usr/share/doc/fzf/examples/completion.bash         # fzf bash completion
                 [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash     # fzf key bindings
                 ;;
             *)
-                echo "Unknown Lunux Distribution: $(lsb_release -is)"
+                echo "Unknown Linux Distribution: $(lsb_release -is)"
                 ;;
         esac
         ;;
     darwin*)
-        alias ls='ls -G'                                                                        # Colorize ls
-        alias peekaboo='sudo netstat -p tcp -van | grep LISTEN'                                 # Show network connections with options PID, listening sockets, udp, numeric address, tcp
-        alias update='brew update && brew upgrade'                                              # Update homebrew formulae and upgrade packages
-
-        cdf() {
-            target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-            if [ "$target" != "" ]; then
-                cd "$target"; pwd
-            else
-                echo 'No Finder window found' >&2
-            fi
-        }
         ;; 
     solaris*) 
         ;;
