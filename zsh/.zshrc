@@ -19,7 +19,7 @@
 ######
 setopt ALIASES                      # Enable alias expansion
 setopt CORRECT                      # Correct command spelling errors
-setopt EXTENDED_GLOB                # Enable extended globbing
+setopt NO_EXTENDED_GLOB             # Disable extended globbing
 setopt NO_CASE_GLOB                 # Case insensitive globbing
 setopt RC_EXPAND_PARAM              # Expand parameters in command substitution
 setopt NO_CHECK_JOBS                # Don't check for running jobs when exiting the shell
@@ -129,9 +129,13 @@ parse_git_branch() {
     local git_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
     [[ -z $git_branch ]] && return
     
+    # If working tree is clean, just show branch name
+    [[ -z $git_status ]] && { printf " (%s)" "$git_branch"; return; }
+    
     # Single pass through status
     local tracked=0 untracked=0
     while IFS= read -r line; do
+        [[ -n "$line" ]] || continue
         [[ $line == "?? "* ]] && ((untracked++)) || ((tracked++))
     done <<< "$git_status"
   
