@@ -1,0 +1,48 @@
+[colors.bright]
+black = "#636363"
+blue = "#7eaac7"
+cyan = "#acbbd0"
+green = "#909d63"
+magenta = "#b06698"
+red = "#bc5653"
+white = "#f7f7f7"
+yellow = "#ebc17a"
+
+[colors.cursor]
+cursor = "#d9d9d9"
+text = "#000000"
+
+[colors.normal]
+black = "#151515"
+blue = "#6a8799"
+cyan = "#c9dfff"
+green = "#909d63"
+magenta = "#b06698"
+red = "#bc5653"
+white = "#d9d9d9"
+yellow = "#ebc17a"
+
+[colors.primary]
+background = "#303030"
+foreground = "#d9d9d9"
+
+[font]
+size = 12.0
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[scrolling]
+history = 0
+multiplier = 3
+
+[window]
+decorations = "full"
+decorations_theme_variant = "Dark"
+dynamic_title = true
+startup_mode = "Maximized"
+
+[window.dimensions]
+columns = 120
+lines = 40
