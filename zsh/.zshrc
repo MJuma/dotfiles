@@ -20,13 +20,14 @@
 setopt ALIASES                      # Enable alias expansion
 setopt CORRECT                      # Correct command spelling errors
 setopt NO_EXTENDED_GLOB             # Disable extended globbing
-setopt NO_CASE_GLOB                 # Case insensitive globbing
+# setopt NO_CASE_GLOB                 # Case insensitive globbing (disabled for case sensitive completion)
 setopt RC_EXPAND_PARAM              # Expand parameters in command substitution
 setopt NO_CHECK_JOBS                # Don't check for running jobs when exiting the shell
 setopt NUMERIC_GLOB_SORT            # Sort numeric filenames in globbing
 setopt AUTO_CD                      # Change to a directory by typing its name
 
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'   # Case insensitive tab completion
+# Force case sensitive completion
+zstyle ':completion:*' matcher-list ''                                              # Case sensitive tab completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"                             # Colored completion (different colors for dirs/files/etc)
 zstyle ':completion:*' rehash true                                                  # automatically find new executables in path 
 zstyle ':completion:*' menu select                                                  # Highlight menu selection
