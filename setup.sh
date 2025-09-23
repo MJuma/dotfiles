@@ -62,16 +62,13 @@ backup_old_files() {
     oldfiles=(
         ".bashrc"
         ".config/alacritty"
-        ".config/dunst"
-        ".config/polybar"
         ".config/vim"
         ".config/ripgreprc"
         ".gitconfig"
-        ".i3"
         ".nanorc"
         ".tmux.conf"
         ".vimrc"
-        ".Xresources"
+        ".zshrc"
         "scripts"
     )
     for i in "${oldfiles[@]}"
