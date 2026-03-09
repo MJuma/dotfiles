@@ -1,7 +1,6 @@
 # Explorer config registry key
 $explorerConfigRegistryKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer'
 $explorerAdvancedConfigRegistryKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-$startMenuConfigRegistryKey = 'HKCU:\Control Panel\Desktop'
 
 # ============ Explorer ===========
 
@@ -27,27 +26,30 @@ Set-ItemProperty -Path $explorerConfigRegistryKey -Name ShowFrequent -Type DWord
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name NavPaneShowAllFolders -Value 1
 
 # Don't show notifications/adverts (OneDrive & new feature alerts) in Windows Explorer
-Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name ShowSyncProviderNotifications -Value 1
+Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name ShowSyncProviderNotifications -Value 0
 
 # ============ Taskbar ============
 
 # Hide TaskView button from taskbar
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name ShowTaskViewButton -Value 0
 
-# Dont combine icons in taskbar, ever
+# Don't combine taskbar buttons (requires Win11 23H2+): Always: 0, When full: 1, Never: 2
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name TaskbarGlomLevel -Value 2
 
 # Show taskbar buttons on all taskbars
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name MMTaskbarMode -Value 0
 
-# Hide Cortana button
-Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name ShowCortanaButton -Value 0
+# Hide Copilot button (replaces Cortana in Win11)
+Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name ShowCopilotButton -Value 0
 
-# Hide search
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Search -Name SearchboxTaskbar -Value 0
+# Hide search from taskbar: Hidden: 0, Icon: 1, Box: 2
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Search -Name SearchboxTaskbarMode -Value 0
 
-# Hide news and interests
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds -Name ShellFeedsTaskbarViewMode -Value 2
+# Hide Widgets button from taskbar (Win11)
+Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name TaskbarDa -Value 0
+
+# Hide Chat button from taskbar (Win11)
+Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name TaskbarMn -Value 0
 
 # ============ System tray ============
 
@@ -61,9 +63,6 @@ Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name Start_TrackProgs
 
 # Hide recently opened Documents from the Start menu /Start Run
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name Start_TrackDocs -Value 0
-
-# Don't add a Games shortcut to the start menu
-Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name Start_ShowMyGames -Value 0
 
 # Don't slow down search by including all public folders
 Set-ItemProperty -Path $explorerAdvancedConfigRegistryKey -Name Start_SearchFiles -Value 1

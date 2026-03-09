@@ -6,7 +6,7 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInf
 Remove-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" "Id" -ErrorAction SilentlyContinue
 
 # General: Disable Application launch tracking: Enable: 1, Disable: 0
-Set-ItemProperty "HKCU:\\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "Start-TrackProgs" 0
+Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "Start-TrackProgs" 0
 
 # General: Disable SmartScreen Filter: Enable: 1, Disable: 0
 Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" "EnableWebContentEvaluation" 0
@@ -23,12 +23,6 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Input\TIPC" "Enabled" 0
 
 # General: Opt-out from websites from accessing language list: Opt-in: 0, Opt-out 1
 Set-ItemProperty "HKCU:\Control Panel\International\User Profile" "HttpAcceptLanguageOptOut" 1
-
-# General: Disable SmartGlass: Enable: 1, Disable: 0
-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "UserAuthPolicy" 0
-
-# General: Disable SmartGlass over BlueTooth: Enable: 1, Disable: 0
-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "BluetoothPolicy" 0
 
 # General: Disable suggested content in settings app: Enable: 1, Disable: 0
 Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" "SubscribedContent-338393Enabled" 0
@@ -89,7 +83,7 @@ if (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules")) {
 }
 Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" "NumberOfSIUFInPeriod" 0
 
-# Feedback: Telemetry: Send Diagnostic and usage data: Basic: 1, Enhanced: 2, Full: 3
+# Feedback: Telemetry: Send Diagnostic and usage data: Required: 1, Optional: 3
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" "AllowTelemetry" 1
 
 # Start Menu: Disable suggested content: Enable: 1, Disable: 0
@@ -98,9 +92,33 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliver
 # Start Menu: Disable Bing Search Results
 Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name BingSearchEnabled -Type DWord -Value 0
 
-# WiFi Sense: Shared HotSpot Auto-Connect: Disable
-Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots -Name value -Type DWord -Value 0
+# ============ Windows 11 Specific ============
 
-# Taskbar: Disable Bing Search
-# Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\ConnectedSearch" "ConnectedSearchUseWeb" 0 # For Windows 8.1
-Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" "BingSearchEnabled" 0 # For Windows 10
+# Disable Windows Copilot: Enable: 1, Disable: 0
+if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" -Type Folder | Out-Null
+}
+Set-ItemProperty "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" "TurnOffWindowsCopilot" 1
+
+# Disable Activity History
+Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "EnableActivityFeed" 0
+Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "PublishUserActivities" 0
+Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "UploadUserActivities" 0
+
+# Disable Windows Recall (AI snapshots)
+if (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsAI")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" -Type Folder | Out-Null
+}
+Set-ItemProperty "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" "DisableAIDataAnalysis" 1
+
+# Disable Start Menu recommendations (Win11)
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "Start_IrisRecommendations" 0
+
+# Disable tailored experiences based on diagnostic data
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" "TailoredExperiencesWithDiagnosticDataEnabled" 0
+
+# Prevent OneDrive from redirecting known folders (Documents, Desktop, Pictures)
+if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\OneDrive")) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\OneDrive" -Type Folder | Out-Null
+}
+Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\OneDrive" "KFMBlockOptIn" 1

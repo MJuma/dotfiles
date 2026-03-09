@@ -6,5 +6,5 @@
 #>
 
 function dotfiles {
-    code $HOME\Documents\Powershell
+    code $HOME\dotfiles
 }

@@ -16,13 +16,14 @@ chmod +x setup.sh
 ./setup.sh [-n: dry run]
 ```
 
-### NT
+### NT (Windows 11)
 
 Dependencies:
 
-- Administrator PowerShell window
+- Administrator PowerShell 7+ window
+- WinGet (built-in on Windows 11)
 
 ```powershell
 Set-ExecutionPolicy Unrestricted
-./PowerShell/Scripts/firstRun/firstRun.ps1
+./pwsh/install/install.ps1
 ```

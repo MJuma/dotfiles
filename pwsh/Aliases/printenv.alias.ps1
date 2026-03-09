@@ -2,9 +2,9 @@
 .DESCRIPTION
     Returns a the current sessions environment variables
 .EXAMPLE
-    envars
+    printenv
 #>
 
-function envars {
+function printenv {
     Get-ChildItem env:* | Sort-Object Name
 }

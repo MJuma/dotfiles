@@ -1,0 +1,208 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [],
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings": 
+    [
+        {
+            "id": "Terminal.MoveFocusDown",
+            "keys": "alt+down"
+        },
+        {
+            "id": "Terminal.OpenNewTab",
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "id": "Terminal.ResizePaneRight",
+            "keys": "alt+shift+right"
+        },
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "id": "Terminal.FindText",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "Terminal.MoveFocusUp",
+            "keys": "alt+up"
+        },
+        {
+            "id": "Terminal.DuplicateTab",
+            "keys": "ctrl+shift+d"
+        },
+        {
+            "id": "Terminal.PrevTab",
+            "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "id": "Terminal.ResizePaneLeft",
+            "keys": "alt+shift+left"
+        },
+        {
+            "id": "Terminal.ClosePane",
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": "Terminal.ResizePaneDown",
+            "keys": "alt+shift+down"
+        },
+        {
+            "id": "Terminal.NextTab",
+            "keys": "ctrl+tab"
+        },
+        {
+            "id": "Terminal.SplitPaneDown",
+            "keys": "alt+shift+minus"
+        },
+        {
+            "id": "Terminal.SplitPaneRight",
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": "Terminal.MoveFocusLeft",
+            "keys": "alt+left"
+        },
+        {
+            "id": "Terminal.MoveFocusRight",
+            "keys": "alt+right"
+        },
+        {
+            "id": "Terminal.ResizePaneUp",
+            "keys": "alt+shift+up"
+        }
+    ],
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "antialiasingMode": "cleartype",
+            "bellStyle": "none",
+            "colorScheme": "Relaxed",
+            "font": 
+            {
+                "face": "Hack Nerd Font",
+                "size": 11
+            },
+            "historySize": 9001,
+            "padding": "8",
+            "scrollbarState": "hidden",
+            "suppressApplicationTitle": true
+        },
+        "list": 
+        [
+            {
+                "commandline": "pwsh.exe -NoLogo",
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "commandline": "C:/Program Files/Git/bin/bash.exe",
+                "guid": "{61c87075-9113-493c-b6af-cbeb7495381d}",
+                "icon": "C:/Program Files/Git/mingw64/share/git/git-for-windows.ico",
+                "name": "Git Bash",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "colorScheme": "Campbell Powershell",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell"
+            },
+            {
+                "colorScheme": "Campbell",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "cmd"
+            }
+        ]
+    },
+    "schemes": 
+    [
+        {
+            "background": "#323232",
+            "black": "#353535",
+            "blue": "#6C99BB",
+            "brightBlack": "#535353",
+            "brightBlue": "#8AB7D9",
+            "brightCyan": "#DCF4FF",
+            "brightGreen": "#C2E075",
+            "brightPurple": "#EFB5F7",
+            "brightRed": "#F00C0C",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#E1E48B",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#BED6FF",
+            "foreground": "#FFFFFF",
+            "green": "#A5C261",
+            "name": "Espresso",
+            "purple": "#D197D9",
+            "red": "#D25252",
+            "selectionBackground": "#FFFFFF",
+            "white": "#EEEEEC",
+            "yellow": "#FFC66D"
+        },
+        {
+            "background": "#353A44",
+            "black": "#151515",
+            "blue": "#6A8799",
+            "brightBlack": "#636363",
+            "brightBlue": "#7EAAC7",
+            "brightCyan": "#ACBBD0",
+            "brightGreen": "#A0AC77",
+            "brightPurple": "#B06698",
+            "brightRed": "#BC5653",
+            "brightWhite": "#F7F7F7",
+            "brightYellow": "#EBC17A",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#C9DFFF",
+            "foreground": "#D9D9D9",
+            "green": "#909D63",
+            "name": "Relaxed",
+            "purple": "#B06698",
+            "red": "#BC5653",
+            "selectionBackground": "#FFFFFF",
+            "white": "#D9D9D9",
+            "yellow": "#EBC17A"
+        },
+        {
+            "background": "#2D2D2D",
+            "black": "#000000",
+            "blue": "#6699CC",
+            "brightBlack": "#000000",
+            "brightBlue": "#6699CC",
+            "brightCyan": "#66CCCC",
+            "brightGreen": "#99CC99",
+            "brightPurple": "#CC99CC",
+            "brightRed": "#F2777A",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFCC66",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#66CCCC",
+            "foreground": "#CCCCCC",
+            "green": "#99CC99",
+            "name": "Tomorrow Night Eighties",
+            "purple": "#CC99CC",
+            "red": "#F2777A",
+            "selectionBackground": "#FFFFFF",
+            "white": "#FFFFFF",
+            "yellow": "#FFCC66"
+        }
+    ],
+    "themes": [],
+    "trimBlockSelection": true
+}

@@ -1,4 +1,4 @@
-# Default Apps List: https://docs.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update
+# Default Apps List: https://learn.microsoft.com/en-us/windows/application-management/overview-windows-apps
 
 function removeApp {
     Param ([string]$appName)
@@ -8,47 +8,50 @@ function removeApp {
 }
 
 $applicationList = @(
-    "Microsoft.BingFinance"
-    "Microsoft.3DBuilder"
-    "Microsoft.BingFinance"
+    # Windows 11 built-in apps
+    "Clipchamp.Clipchamp"
+    "Microsoft.549981C3F5F10"            # Cortana
     "Microsoft.BingNews"
-    "Microsoft.BingSports"
     "Microsoft.BingWeather"
-    "Microsoft.CommsPhone"
-    "Microsoft.Getstarted"
-    "Microsoft.WindowsMaps"
-    "*MarchofEmpires*"
+    "Microsoft.GamingApp"
     "Microsoft.GetHelp"
-    "Microsoft.Messaging"
-    "*Minecraft*"
+    "Microsoft.Getstarted"               # Tips
     "Microsoft.MicrosoftOfficeHub"
-    "Microsoft.OneConnect"
-    "Microsoft.WindowsPhone"
+    "Microsoft.MicrosoftStickyNotes"
+    "Microsoft.People"
+    "Microsoft.PowerAutomateDesktop"
+    "Microsoft.Todos"
+    "Microsoft.Windows.DevHome"
+    "Microsoft.WindowsFeedbackHub"
+    "Microsoft.WindowsMaps"
     "Microsoft.WindowsSoundRecorder"
-    "*Solitaire*"
-    "Microsoft.Office.Sway"
-    "Microsoft.SkypeApp"
     "Microsoft.XboxApp"
+    "Microsoft.Xbox.TCUI"
+    "Microsoft.XboxGameOverlay"
+    "Microsoft.XboxGamingOverlay"
     "Microsoft.XboxIdentityProvider"
+    "Microsoft.XboxSpeechToTextOverlay"
+    "Microsoft.YourPhone"
     "Microsoft.ZuneMusic"
     "Microsoft.ZuneVideo"
-    "Microsoft.NetworkSpeedTest"
-    "Microsoft.FreshPaint"
-    "Microsoft.Print3D"
+    "MicrosoftTeams"
+    "*Solitaire*"
+    # Third-party bloatware
     "*Autodesk*"
     "*BubbleWitch*"
-    "king.com*"
-    "G5*"
     "*Dell*"
     "*Facebook*"
     "*Keeper*"
+    "*Minecraft*"
     "*Netflix*"
     "*Twitter*"
     "*Plex*"
     "*.Duolingo-LearnLanguagesforFree"
     "*.EclipseManager"
-    "ActiproSoftwareLLC.562882FEEB491" # Code Writer
+    "ActiproSoftwareLLC.562882FEEB491"   # Code Writer
     "*.AdobePhotoshopExpress"
+    "G5*"
+    "king.com*"
 );
 
 foreach ($app in $applicationList) {
