@@ -26,6 +26,18 @@ if test -t 1; then # if terminal
         white="$(tput setaf 7)"
     fi
 fi
+bold="${bold:-}"
+underline="${underline:-}"
+standout="${standout:-}"
+normal="${normal:-}"
+black="${black:-}"
+red="${red:-}"
+green="${green:-}"
+yellow="${yellow:-}"
+blue="${blue:-}"
+magenta="${magenta:-}"
+cyan="${cyan:-}"
+white="${white:-}"
 
 print_bold() {
     title="$1"
