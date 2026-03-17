@@ -114,6 +114,8 @@ stow_dotfiles() {
 
 if [[ $dryRun = true ]]; then
     dryRunMessage="${yellow} (Dry Run)${normal}"
+else
+    dryRunMessage=""
 fi
 
 print_bold \
