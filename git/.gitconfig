@@ -4,6 +4,8 @@
     excludesfile = ~/.gitignore
     pager = delta
 	autocrlf = input
+    untrackedCache = true
+    fsmonitor = true
 
 [init]
     defaultBranch = master
@@ -31,14 +33,22 @@
     untracked = red
 
 [pull]
-    rebase = false
+    rebase = true
 
 [push]
     default = simple
     autoSetupRemote = true
 
+[merge]
+    conflictstyle = zdiff3
+
+[rebase]
+    autoStash = true
+
+[rerere]
+    enabled = true
+
 [diff]
-	tool = delta
     guitool = code
 
 [difftool]
@@ -78,6 +88,10 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+# Machine-specific overrides (credentials, user identity, etc.)
+[include]
+    path = ~/.gitconfig.local
 
 [alias]
     # Show all of my configured aliases
@@ -129,8 +143,8 @@
     # <commit-hash> 2 days ago commit message [Author Name]
     lr = log --pretty=format:"%C(yellow)%h\\ %Cgreen%ad%Creset\\ %s\\ %Cblue[%an]" --date=relative
 
-    # Show all authers in repo
-    authors = !sh -c 'git log --format="%aN" | sort -k 2 -u'
+    # Show all authors in repo
+    authors = !sh -c 'git log --format="%aN" | sort -u'
 
     # Shows authors by number of commits
     who = shortlog -sn --no-merges
@@ -163,4 +177,6 @@
     fprune = fetch --prune
 
     # Show remote origin config
-    show = remote show origin
+    rshow = remote show origin
+[credential "azrepos:org/powerbi"]
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47

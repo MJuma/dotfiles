@@ -27,7 +27,7 @@ function guid { [guid]::NewGuid() }
 function which($cmd) { (Get-Command $cmd).Definition }
 function printenv { Get-ChildItem env:* | Sort-Object Name }
 
-function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
+function Get-PubIP { (Invoke-WebRequest https://ifconfig.me/ip).Content }
 Set-Alias -Name myAddr -Value Get-PubIP
 
 function U {

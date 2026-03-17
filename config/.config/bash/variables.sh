@@ -1,7 +1,6 @@
 ######
 ## Bash Global Variables
 ######
-export TZ="/usr/share/zoneinfo/America/Los_Angeles"                                             # Set timezone to PDT/PST
 export EDITOR='vim'                                                                             # Set line editor
 [[ -z $DISPLAY ]] && export VISUAL='vim' || export VISUAL='code'                                # Set visual or terminal editor
 
@@ -11,14 +10,6 @@ export EDITOR='vim'                                                             
 HISTCONTROL=ignoreboth                                                                          # Don't put duplicate lines or lines starting with space in the history.
 HISTSIZE=10000                                                                                  # Number of lines stored in memory for a running bash session
 HISTFILESIZE=20000                                                                              # Number of lines stored in bash history file
-
-######
-## Path
-######
-export PATH=$PATH:$HOME/bin
-if [ -d "$HOME/.yarn/bin" ]; then
-    export PATH=$PATH:$HOME/.yarn/bin
-fi
 
 ######
 ## rg

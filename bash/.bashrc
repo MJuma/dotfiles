@@ -12,7 +12,6 @@
 # CTRL+Y                ("yank" out whatever is in the buffer. aka paste)
 
 # If not running interactively, don't do anything
-# [[ $- != *i* ]] && return
 case $- in
     *i*) ;;
       *) return;;
@@ -26,15 +25,10 @@ shopt -s checkwinsize                                       # Check the window s
 shopt -s expand_aliases                                     # Aliases are expanded
 
 if [[ $CODESPACES ]]; then
-    HISTFILEBASE=/workspaces/.codespaces/.persistedshare
+    HISTFILE=/workspaces/.codespaces/.persistedshare/.bash_history
 else
-    HISTFILEBASE=$HOME
-fi
-
-if [[ $TMUX_PANE ]]; then
-    HISTFILE=$HISTFILEBASE/.bash_history_tmux_${TMUX_PANE:1}        # Set a differetn history file for each tmux pane
-else
-    HISTFILE=$HISTFILEBASE/.bash_history
+    mkdir -p "$HOME/.local/state/bash"
+    HISTFILE="$HOME/.local/state/bash/history"
 fi
 
 ######
@@ -44,22 +38,23 @@ if ! shopt -oq posix; then
     [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
     [ -r /etc/bash_completion ] && . /etc/bash_completion
     [ -r /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-    [ type brew &> /dev/null ] && [ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
+    type brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ] && . "$(brew --prefix)/etc/bash_completion"
 
     if [ -d /etc/bash_completion.d ]; then
         for bcfile in /etc/bash_completion.d/* ; do
-            [ -f "$bcfile" ] && . $bcfile
+            [ -f "$bcfile" ] && . "$bcfile"
         done
     fi
 
     if [ -d ~/.bash_completion.d ]; then
         for bcfile in ~/.bash_completion.d/* ; do
-            [ -f "$bcfile" ] && . $bcfile
+            [ -f "$bcfile" ] && . "$bcfile"
         done
     fi
 
-    if [ ! -r "$HOME/.config/.git-completion.bash" ] && [ type curl &> /dev/null ]; then
-        curl -fLo "$HOME/.config/.git-completion.bash" --create-dirs https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    if [ ! -r "$HOME/.config/.git-completion.bash" ] && type curl &>/dev/null; then
+        (curl -fLo "$HOME/.config/.git-completion.bash" --create-dirs \
+            https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash &)
     fi
     [ -r "$HOME/.config/.git-completion.bash" ] && . "$HOME/.config/.git-completion.bash"
 fi
@@ -85,15 +80,19 @@ esac
 ## Shell Prompt
 ######
 parse_git_branch() {
-    git_branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+    local branch
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || return
 
-    if [ $git_branch ]; then
-        git_status=$(git status --porcelain 2>/dev/null)
-        git_tracked_changes_count=$(for i in "$git_status"; do echo "$i"; done | grep -v '^?? ' | sed '/^$/d' | wc -l | sed "s/ //g")
-        git_untracked_changes_count=$(for i in "$git_status"; do echo "$i"; done | grep '^?? ' | sed '/^$/d' | wc -l | sed "s/ //g")
+    local tracked=0 untracked=0
+    while IFS= read -r line; do
+        if [[ "$line" == '?? '* ]]; then
+            ((untracked++))
+        elif [[ -n "$line" ]]; then
+            ((tracked++))
+        fi
+    done < <(git status --porcelain 2>/dev/null)
 
-        echo -e " (${git_branch}:${git_tracked_changes_count}:${git_untracked_changes_count})"
-    fi
+    echo -e " (${branch}:${tracked}:${untracked})"
 }
 
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -129,38 +128,52 @@ fi
 ######
 ## Aliases
 ######
-source "$HOME/.config/bash/aliases.sh"
+[ -f "$HOME/.config/bash/aliases.sh" ] && source "$HOME/.config/bash/aliases.sh"
 
 ######
 ## Functions
 ######
-source "$HOME/.config/bash/functions.sh"
+[ -f "$HOME/.config/bash/functions.sh" ] && source "$HOME/.config/bash/functions.sh"
 
 ######
 ## Variables
 ######
-source "$HOME/.config/bash/variables.sh"
+[ -f "$HOME/.config/bash/variables.sh" ] && source "$HOME/.config/bash/variables.sh"
 
 ######
 ## OS && Distribution Specific
 ######
 case "$OSTYPE" in
     linux*)
-        case "$(lsb_release -is | awk '{print tolower($0)}')" in
-            arch* | manjaro*)
+        local distro_id
+        if [ -r /etc/os-release ]; then
+            distro_id=$(. /etc/os-release && echo "$ID")
+        fi
+        case "$distro_id" in
+            arch | manjaro)
                 [ -r /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash       # fzf bash completion
                 [ -r /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash   # fzf key bindings
                 ;;
-            debian* | ubuntu* )
+            debian | ubuntu)
                 [ -r /usr/share/doc/fzf/examples/completion.bash ] && . /usr/share/doc/fzf/examples/completion.bash         # fzf bash completion
                 [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash     # fzf key bindings
                 ;;
+            fedora)
+                [ -r /usr/share/fzf/shell/key-bindings.bash ] && . /usr/share/fzf/shell/key-bindings.bash   # fzf key bindings
+                ;;
+            mariner | azurelinux)
+                type fzf &>/dev/null && eval "$(fzf --bash)"                                    # fzf shell integration
+                ;;
             *)
-                echo "Unknown Linux Distribution: $(lsb_release -is)"
+                echo "Unknown Linux Distribution: ${distro_id:-unknown}"
                 ;;
         esac
         ;;
     darwin*)
+        [ -r /opt/homebrew/opt/fzf/shell/completion.bash ] && . /opt/homebrew/opt/fzf/shell/completion.bash             # fzf bash completion (Apple Silicon)
+        [ -r /opt/homebrew/opt/fzf/shell/key-bindings.bash ] && . /opt/homebrew/opt/fzf/shell/key-bindings.bash         # fzf key bindings (Apple Silicon)
+        [ -r /usr/local/opt/fzf/shell/completion.bash ] && . /usr/local/opt/fzf/shell/completion.bash                   # fzf bash completion (Intel)
+        [ -r /usr/local/opt/fzf/shell/key-bindings.bash ] && . /usr/local/opt/fzf/shell/key-bindings.bash               # fzf key bindings (Intel)
         ;; 
     solaris*) 
         ;;
@@ -172,3 +185,6 @@ case "$OSTYPE" in
         echo "Unknown OS Type: $OSTYPE"
         ;;
 esac
+
+# Machine-specific overrides (credentials, tokens, etc.)
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local

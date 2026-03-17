@@ -1,11 +1,8 @@
 #!/bin/bash
 
-mcd() { mkdir -p "$1" && cd "$1";}                                                                      # Make a directory and cd into it
-cls() { cd "$1" && ls;}                                                                                 # cd into a directory and ls it
 backup() { cp -- "$1"{,.bak};}                                                                          # Backup a file to file.bak
 md5check() { md5sum "$1" | grep "$2";}                                                                  # Compare md5sum of file to key
 checkport() { lsof -i:$1; }                                                                             # Check for any programs using a given port   
-randfile() { find $1 -type f | shuf -n 1; }                                                             # Returns a random file within a given dir recursively
 wttr() { curl -s "wttr.in/$1"; }                                                                        # Returns the weather in the given location 
 dut() { du -d 1 -h 2> >(grep -v 'du: cannot') $1 | sort -h; }                                           # Returns the disk usage totals for a given directory   
 
@@ -40,18 +37,6 @@ _fzf_compgen_path() {
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
     command fd --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
-}
-
-# # Open the selected filewith default editor
-# #   - CTRL-O to open with `open` command,
-# #   - CTRL-E or Enter key to open with the $EDITOR
-fo() {
-  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
 }
 
 # using ripgrep combined with preview
@@ -101,11 +86,4 @@ frepl() {
             echo "Unknown REPL type"
             ;;
     esac
-}
-
-# caniuse: https://sidneyliebrand.io/blog/combining-caniuse-with-fzf
-fcani() {
-    if [ ! -r "$HOME/Downlaods/cani.json" ]; then
-        curl -fLo "$HOME/Downlaods/cani.json" --create-dirs https://raw.githubusercontent.com/Fyrd/caniuse/master/data.json
-    fi
 }

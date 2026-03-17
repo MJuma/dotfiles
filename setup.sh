@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 dryRun=false
 while getopts "n" option; do
@@ -57,13 +58,14 @@ validate_dependencies() {
 }
 
 # Backup old files to avoid overwriting
-declare -A filesMoved
+filesMovedOutput=""
 backup_old_files() {
     oldfiles=(
         ".bashrc"
         ".config/alacritty"
-        ".config/vim"
+        ".config/bash"
         ".config/ripgreprc"
+        ".config/vim"
         ".gitconfig"
         ".nanorc"
         ".tmux.conf"
@@ -74,36 +76,39 @@ backup_old_files() {
     for i in "${oldfiles[@]}"
     do
         if [[ -f "$HOME/$i" ]]; then
-            if !([[ -h "$HOME/$i" ]] && [[ $(readlink -f "$HOME/$i") == $HOME/dotfiles* ]]); then
+            if !([[ -h "$HOME/$i" ]] && [[ $(readlink "$HOME/$i") == *dotfiles* ]]); then
                 if [[ $dryRun = false ]]; then
                     mv "$HOME/$i" "$HOME/$i-old"
                 fi
-                filesMoved["$HOME/$i"]="$HOME/$i-old"
+                filesMovedOutput="${filesMovedOutput}\n\t$HOME/$i ${blue}=>${normal} $HOME/$i-old"
             fi
         fi
     done
 }
 
 # Use stow to link dotfiles to $HOME directory
-declare -A linkedFiles
+linkedFilesOutput=""
 stow_dotfiles() {
     IFS=$'\n'
-    dotfiles=($(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' -printf "%f\n" | grep -v "PowerShell"))
+    dotfiles=($(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' | sed 's|.*/||' | grep -v -E "PowerShell|pwsh"))
     unset IFS
     for dotfile in "${dotfiles[@]}"
     do
+        local stowOutput
         if [[ $dryRun = true ]]; then
-            linkedFile=($(stow -n -v -t $HOME $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
+            stowOutput=$(stow -n -v --no-folding -t $HOME $dotfile 2>&1)
         else
-            linkedFile=($(stow -v -t $HOME $dotfile 2>&1 | grep LINK | cut -c 7- | awk -F ' => ' '{print $1,$2}'))
+            stowOutput=$(stow -v --no-folding -t $HOME $dotfile 2>&1)
         fi
 
-        i=0
-        while [[ -v "linkedFile[$i]" ]]
-        do
-            linkedFiles[${linkedFile[$i]}]=${linkedFile[$i+1]}
-            ((i=i+2))
-        done
+        while IFS= read -r line; do
+            if [[ "$line" == *"LINK"* ]]; then
+                local target source
+                target=$(echo "$line" | cut -c 7- | awk -F ' => ' '{print $1}')
+                source=$(echo "$line" | cut -c 7- | awk -F ' => ' '{print $2}')
+                linkedFilesOutput="${linkedFilesOutput}\n\t${target} ${blue}=>${normal} ${source}"
+            fi
+        done <<< "$stowOutput"
     done
 }
 
@@ -129,12 +134,6 @@ echo " (${green}Success${normal})"
 echo -n "Running step: Link dotfiles"
 stow_dotfiles
 echo " (${green}Success${normal})"
-
-filesMovedOutput=""
-for movedFile in "${!filesMoved[@]}"; do filesMovedOutput="${filesMovedOutput}\n\t$movedFile ${blue}=>${normal} ${filesMoved[$movedFile]}"; done
-
-linkedFilesOutput=""
-for linkedFile in "${!linkedFiles[@]}"; do linkedFilesOutput="${linkedFilesOutput}\n\t$linkedFile ${blue}=>${normal} ${linkedFiles[$linkedFile]}"; done
 
 print_bold \
     "                       dotfiles setup complete                           " \

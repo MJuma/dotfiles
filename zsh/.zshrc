@@ -1,4 +1,17 @@
 # ~/.zshrc: executed by zsh(1) for interactive shells.
+#
+# Zsh Startup File Load Order:
+#   1. ~/.zshenv     - All shells (login, interactive, scripts, agents)
+#   2. /etc/zprofile - Login shells only (runs path_helper on macOS)
+#   3. ~/.zprofile   - Login shells only
+#   4. /etc/zshrc    - Interactive shells only
+#   5. ~/.zshrc      - Interactive shells only (this file)
+#   6. /etc/zlogin   - Login shells only
+#   7. ~/.zlogin     - Login shells only
+#
+# Machine-specific config (PATH, Homebrew, NVM) belongs in ~/.zshenv
+# so non-interactive shells (e.g. Copilot agents, scripts) have access.
+# This file is symlinked from dotfiles and shared across machines.
 
 # Zsh keyboard shortcuts
 # CTRL+A                (Go to beginning of line)
@@ -51,15 +64,10 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 if [[ -n ${CODESPACES:-} ]]; then
-    HISTFILEBASE=/workspaces/.codespaces/.persistedshare
+    HISTFILE=/workspaces/.codespaces/.persistedshare/.zsh_history
 else
-    HISTFILEBASE=$HOME
-fi
-
-if [[ -n ${TMUX_PANE:-} ]]; then
-    HISTFILE=$HISTFILEBASE/.zsh_history_tmux_${TMUX_PANE:1}
-else
-    HISTFILE=$HISTFILEBASE/.zsh_history
+    mkdir -p "$HOME/.local/state/zsh"
+    HISTFILE="$HOME/.local/state/zsh/history"
 fi
 
 ######
@@ -175,17 +183,27 @@ fi
 ######
 case "$OSTYPE" in
     linux*)
-        case "$(lsb_release -is | awk '{print tolower($0)}')" in
-            arch* | manjaro*)
+        local distro_id
+        if [ -r /etc/os-release ]; then
+            distro_id=$(. /etc/os-release && echo "$ID")
+        fi
+        case "$distro_id" in
+            arch | manjaro)
                 [ -r /usr/share/fzf/completion.zsh ] && . /usr/share/fzf/completion.zsh       # fzf zsh completion
                 [ -r /usr/share/fzf/key-bindings.zsh ] && . /usr/share/fzf/key-bindings.zsh   # fzf key bindings
                 ;;
-            debian* | ubuntu* )
+            debian | ubuntu)
                 [ -r /usr/share/doc/fzf/examples/completion.zsh ] && . /usr/share/doc/fzf/examples/completion.zsh         # fzf zsh completion
                 [ -r /usr/share/doc/fzf/examples/key-bindings.zsh ] && . /usr/share/doc/fzf/examples/key-bindings.zsh     # fzf key bindings
                 ;;
+            fedora)
+                [ -r /usr/share/fzf/shell/key-bindings.zsh ] && . /usr/share/fzf/shell/key-bindings.zsh   # fzf key bindings
+                ;;
+            mariner | azurelinux)
+                type fzf &>/dev/null && eval "$(fzf --zsh)"                                     # fzf shell integration
+                ;;
             *)
-                echo "Unknown Linux Distribution: $(lsb_release -is)"
+                echo "Unknown Linux Distribution: ${distro_id:-unknown}"
                 ;;
         esac
         ;;
@@ -203,3 +221,6 @@ case "$OSTYPE" in
         echo "Unknown OS Type: $OSTYPE"
         ;;
 esac
+
+# Machine-specific overrides (credentials, tokens, etc.)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
