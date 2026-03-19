@@ -145,7 +145,7 @@ fi
 ######
 case "$OSTYPE" in
     linux*)
-        local distro_id
+        distro_id=
         if [ -r /etc/os-release ]; then
             distro_id=$(. /etc/os-release && echo "$ID")
         fi
@@ -168,6 +168,7 @@ case "$OSTYPE" in
                 echo "Unknown Linux Distribution: ${distro_id:-unknown}"
                 ;;
         esac
+        unset distro_id
         ;;
     darwin*)
         [ -r /opt/homebrew/opt/fzf/shell/completion.bash ] && . /opt/homebrew/opt/fzf/shell/completion.bash             # fzf bash completion (Apple Silicon)

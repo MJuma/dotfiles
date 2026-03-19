@@ -45,7 +45,7 @@ case "$OSTYPE" in
         alias xres="xrdb -merge ~/.Xresources"                                                  # Reload ~/.Xresources
         alias rebuild-fonts="fc-cache -f -v"                                                    # Rebuilds font cache
 
-        local distro_id
+        distro_id=
         if [ -r /etc/os-release ]; then
             distro_id=$(. /etc/os-release && echo "$ID")
         fi
@@ -90,6 +90,7 @@ case "$OSTYPE" in
             *)
                 ;;
         esac
+        unset distro_id
         ;;
     darwin*)
         alias ls='ls -G'                                                                        # Colorize ls
