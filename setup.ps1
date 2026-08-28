@@ -87,7 +87,8 @@ if (-not (Test-Path $profileDir)) {
     }
 }
 $sourceLine = ". `"$dotfilesRoot\pwsh\profile.ps1`""
-$alreadyPresent = (Test-Path $PROFILE) -and (Select-String -Path $PROFILE -Pattern ([regex]::Escape($sourceLine)) -SimpleMatch -Quiet)
+$dotfilesImportPattern = '^\s*\.\s+.*(?:pwsh[\\/]profile\.ps1["'']?|dotfilesProfile|commonProfile)\s*$'
+$alreadyPresent = (Test-Path $PROFILE) -and (Select-String -Path $PROFILE -Pattern $dotfilesImportPattern -Quiet)
 if ($alreadyPresent) {
     Write-Host "  ${green}Already present:${reset} $PROFILE already dot-sources dotfiles profile"
 } elseif ($DryRun) {

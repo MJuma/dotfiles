@@ -19,7 +19,14 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";
 pwsh.exe -File "$PSScriptRoot\PowerShellCore.ps1"
 
 # Clone dotfiles repo
-git clone https://github.com/MJuma/dotfiles.git $HOME\dotfiles
+$dotfilesPath = Join-Path $HOME 'dotfiles'
+if (Test-Path -LiteralPath (Join-Path $dotfilesPath '.git')) {
+    Write-Host "Dotfiles already cloned at $dotfilesPath; skipping clone." -ForegroundColor DarkGray
+} elseif (Test-Path -LiteralPath $dotfilesPath) {
+    Write-Warning "Cannot clone dotfiles because '$dotfilesPath' already exists and is not a Git repository."
+} else {
+    git clone https://github.com/MJuma/dotfiles.git $dotfilesPath
+}
 
 # Link dotfiles (profile, gitconfig, terminal settings, doskey)
 & "$PSScriptRoot\..\..\setup.ps1"
