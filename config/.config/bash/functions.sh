@@ -30,14 +30,16 @@ extract() {
 
 # Use fd instead of the default find for fzf '**' shell completions.
 # - The first argument to the function ($1) is the base path to start traversal
-_fzf_compgen_path() {
-    command fd --hidden --follow --exclude .git --exclude node_modules . "$1"
-}
+if [[ -n $FD_BIN ]]; then
+    _fzf_compgen_path() {
+        command "$FD_BIN" --hidden --follow --exclude .git --exclude node_modules . "$1"
+    }
 
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-    command fd --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
-}
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+        command "$FD_BIN" --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
+    }
+fi
 
 # using ripgrep combined with preview
 # find-in-file - usage: fif <searchTerm>

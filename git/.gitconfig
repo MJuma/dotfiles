@@ -1,7 +1,6 @@
 [core]
 	editor = vim
-	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-    excludesfile = ~/.gitignore
+	whitespace = -indent-with-non-tab,trailing-space,cr-at-eol
     pager = delta
 	autocrlf = input
     untrackedCache = true
@@ -49,7 +48,8 @@
     enabled = true
 
 [diff]
-    guitool = code
+    guitool = vscode
+    colorMoved = default
 
 [difftool]
     prompt = false
@@ -68,7 +68,6 @@
     syntax-theme = Coldark-Dark
     plus-style = 'syntax "#333B2F"'
     minus-style = 'syntax "#382F32"'
-    colorMoved = default
     hyperlinks = false
 
 [delta "decorations"]
@@ -89,10 +88,6 @@
 	process = git-lfs filter-process
 	required = true
 
-# Machine-specific overrides (credentials, user identity, etc.)
-[include]
-    path = ~/.gitconfig.local
-
 [alias]
     # Show all of my configured aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
@@ -110,7 +105,7 @@
     export = archive -o latest.tar.gz -9 --prefix=latest/
 
     # Which files are receiving the most "love"
-    churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
+    churn = "!f() { git log --all -M -C --name-only --format='format:' \"$@\" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print \"count,file\"} {count = $1; sub(/^ *[0-9]+ /, \"\"); print count \",\" $0}'; }; f"
 
     # Displays the commit logs using a branch graph representation
     # Format:
@@ -155,8 +150,8 @@
     # SHow git config
     info = config --list
 
-    # Hard reset current branch
-    nuke = !sh -c 'git reset --hard HEAD~$1' -
+    # Hard reset current branch to HEAD~N (no argument: discard uncommitted changes only)
+    nuke = !sh -c 'git reset --hard HEAD~${1:-0}' -
 
     # Soft reset current branch
     unstage = reset HEAD
@@ -165,7 +160,7 @@
     origin = remote show origin
 
     # Change branches using fuzzy finder
-    fbr = !git branch | fzf
+    fbr = "!f() { branch=$(git branch --format='%(refname:short)' | fzf --no-multi) && git switch \"$branch\"; }; f"
 
     # Fuzzy diff of current changes
     fdiff = !git status -s  | fzf --no-sort --preview 'git diff --color=always {+2} | delta -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}' --preview-window 'right:nohidden:80%:wrap'
@@ -178,3 +173,7 @@
 
     # Show remote origin config
     rshow = remote show origin
+
+# Machine-specific overrides (credentials, user identity, etc.); last so they take precedence
+[include]
+    path = ~/.gitconfig.local

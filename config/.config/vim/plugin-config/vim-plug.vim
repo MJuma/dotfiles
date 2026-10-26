@@ -17,7 +17,7 @@ Plug 'tpope/vim-commentary'                                                     
 Plug 'jiangmiao/auto-pairs'                                                     " auto add closing brackets and braces
 Plug 'alvan/vim-closetag'                                                       " auto add closing HTML tabs
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                                 " intellisense
-Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/rpc' }                  " fzf preview
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }                   " fzf preview
 Plug 'junegunn/gv.vim'                                                          " git commit browser
 Plug 'rhysd/git-messenger.vim'                                                  " git line commit blame
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }            " shows keymappings for vim
@@ -25,3 +25,5 @@ Plug 'wfxr/minimap.vim'                                                         
 Plug 'justinmk/vim-sneak'                                                       " jump to a location by typing the characters there
 
 call plug#end()                                                                 " Initialize plugin system
+
+let g:coc_global_extensions = ['coc-json', 'coc-sh', 'coc-vimlsp']             " language servers coc installs on first start

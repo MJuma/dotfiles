@@ -2,6 +2,11 @@
 # Print every option with its default value: herdr --default-config
 onboarding = false
 
+[theme]
+# Use the colors of the host terminal, and do not follow its light/dark mode.
+name = "terminal"
+auto_switch = false
+
 [keys]
 # The same prefix as tmux. Press ctrl+a twice to send ctrl+a to the program,
 # for example to go to the start of the line in a shell or in Copilot CLI.

@@ -52,11 +52,19 @@ if ! shopt -oq posix; then
         done
     fi
 
-    if [ ! -r "$HOME/.config/.git-completion.bash" ] && type curl &>/dev/null; then
-        (curl -fLo "$HOME/.config/.git-completion.bash" --create-dirs \
-            https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash &)
+    if ! complete -p git &>/dev/null && ! complete -p -D &>/dev/null; then
+        for gitcompletion in \
+            "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/bash_completion.d/git-completion.bash" \
+            /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash \
+            /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash \
+            /usr/share/bash-completion/completions/git; do
+            if [ -r "$gitcompletion" ]; then
+                . "$gitcompletion"
+                break
+            fi
+        done
+        unset gitcompletion
     fi
-    [ -r "$HOME/.config/.git-completion.bash" ] && . "$HOME/.config/.git-completion.bash"
 fi
 complete -cf sudo
 
@@ -90,7 +98,7 @@ parse_git_branch() {
         elif [[ -n "$line" ]]; then
             ((tracked++))
         fi
-    done < <(git status --porcelain 2>/dev/null)
+    done < <(GIT_OPTIONAL_LOCKS=0 git status --porcelain 2>/dev/null)   # no index.lock from the prompt
 
     echo -e " (${branch}:${tracked}:${untracked})"
 }
@@ -131,14 +139,14 @@ fi
 [ -f "$HOME/.config/bash/aliases.sh" ] && source "$HOME/.config/bash/aliases.sh"
 
 ######
-## Functions
-######
-[ -f "$HOME/.config/bash/functions.sh" ] && source "$HOME/.config/bash/functions.sh"
-
-######
 ## Variables
 ######
 [ -f "$HOME/.config/bash/variables.sh" ] && source "$HOME/.config/bash/variables.sh"
+
+######
+## Functions
+######
+[ -f "$HOME/.config/bash/functions.sh" ] && source "$HOME/.config/bash/functions.sh"
 
 ######
 ## OS && Distribution Specific

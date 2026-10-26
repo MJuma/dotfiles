@@ -12,6 +12,9 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+""""" Leader """""
+let mapleader=","                                                               " set before the plugin configs so their <leader> mappings use it
+
 """"" Plugins """""
 source $HOME/.config/vim/plugin-config/vim-plug.vim
 source $HOME/.config/vim/plugin-config/lightline.vim
@@ -24,7 +27,7 @@ set background=dark                                                             
 let g:onedark_hide_endofbuffer=0                                                " don't hide end-of-buffer filler lines (~)
 let g:onedark_termcolors=256                                                    " configure onedark for 256 color terminal
 
-colorscheme onedark                                                             " select color scheme from $HOME/.vim/colors/
+silent! colorscheme onedark                                                     " select color scheme from $HOME/.vim/colors/ (missing until PlugInstall finishes)
 
 """"" Spaces & Tabs """""
 set autoindent                                                                  " copies indent from current line when starting new line
@@ -57,10 +60,13 @@ set foldnestmax=10                                                              
 set foldmethod=indent                                                           " fold based on indent level
 
 """"" Key Remap """""
-let mapleader=","
-nnoremap <leader><space> :nohlsearch<CR>	                                    " turn off search highlight. Maps to ,<space>
-nnoremap <space> za							                                    " space open/closes folds
+" turn off search highlight. Maps to ,<space>
+nnoremap <leader><space> :nohlsearch<CR>
+" space open/closes folds
+nnoremap <space> za
 nnoremap <leader>h <C-W>h
 nnoremap <leader>j <C-W>j
 nnoremap <leader>k <C-W>k
 nnoremap <leader>l <C-W>l
+" show leader mappings after a pause (loads vim-which-key on demand)
+nnoremap <silent> <leader> :<C-u>WhichKey ','<CR>

@@ -42,8 +42,6 @@ $global:_DeferredModulesLoaded = $false
 # Zoxide integration (cached for speed). The generated script still calls the
 # executable on every directory change, so do not load it when zoxide is absent.
 & {
-    param($ProfileRoot)
-
     $hadZoxideHook = try { $global:__zoxide_hooked -eq 1 } catch { $false }
     $zoxidePath = $null
     $zoxideName = if ($env:OS -eq 'Windows_NT') { 'zoxide.exe' } else { 'zoxide' }
@@ -58,9 +56,17 @@ $global:_DeferredModulesLoaded = $false
     }
 
     if ($zoxidePath) {
-        $zoxideCache = [System.IO.Path]::Combine($ProfileRoot, 'zoxide.ps1')
-        if (-not [System.IO.File]::Exists($zoxideCache)) {
-            & $zoxidePath init powershell | Set-Content -LiteralPath $zoxideCache -Encoding UTF8
+        $cacheRoot = if ($env:LOCALAPPDATA) { $env:LOCALAPPDATA } elseif ($env:XDG_CACHE_HOME) { $env:XDG_CACHE_HOME } else { [System.IO.Path]::Combine($HOME, '.cache') }
+        $zoxideCache = [System.IO.Path]::Combine($cacheRoot, 'zoxide', 'init.ps1')
+        # Regenerate after zoxide upgrades so the init script matches the binary.
+        if (-not [System.IO.File]::Exists($zoxideCache) -or
+            [System.IO.File]::GetLastWriteTimeUtc($zoxidePath) -gt [System.IO.File]::GetLastWriteTimeUtc($zoxideCache)) {
+            $null = [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($zoxideCache))
+            # Keep the old cache if zoxide fails; an empty one wouldn't be retried until zoxide changes.
+            $zoxideInit = & $zoxidePath init powershell | Out-String
+            if ($LASTEXITCODE -eq 0 -and $zoxideInit.Trim()) {
+                [System.IO.File]::WriteAllText($zoxideCache, $zoxideInit)
+            }
         }
         if ([System.IO.File]::Exists($zoxideCache)) {
             # Ensure reloading the profile wraps the newly defined prompt again.
@@ -81,7 +87,7 @@ $global:_DeferredModulesLoaded = $false
         }
         $global:__zoxide_hooked = 0
     }
-} $PSScriptRoot
+}
 
 # Profile load time (only show if slow)
 $global:_ProfileLoadStopwatch.Stop()

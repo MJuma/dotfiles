@@ -2,7 +2,13 @@
 ## Bash Global Variables
 ######
 export EDITOR='vim'                                                                             # Set line editor
-[[ -z $DISPLAY ]] && export VISUAL='vim' || export VISUAL='code'                                # Set visual or terminal editor
+export VISUAL='vim'                                                                             # Set visual editor
+# VS Code can only open a window from its own terminal or a local (non-SSH) desktop session
+if command -v code &>/dev/null; then
+    if [[ $TERM_PROGRAM == vscode ]] || [[ -z $SSH_CONNECTION && ( $OSTYPE == darwin* || -n $DISPLAY || -n $WAYLAND_DISPLAY ) ]]; then
+        export VISUAL='code --wait'
+    fi
+fi
 
 ######
 ## Shell History
@@ -19,6 +25,8 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 ######
 ## fd
 ######
+# Debian/Ubuntu install fd as fdfind, and the fd alias doesn't apply to `command` or fzf's shells
+FD_BIN=$(command -v fdfind || command -v fd)
 export FD_OPTIONS="--hidden --absolute-path --exclude .git --exclude node_modules"
 
 ######
@@ -46,11 +54,16 @@ export FZF_DEFAULT_OPTS="
 "
 export FZF_DEFAULT_COMMAND="
     (rg --files --line-number --hidden --smart-case) ||
-    (fd --type f --type l $FD_OPTIONS) ||
+    (${FD_BIN:-fd} --type f --type l $FD_OPTIONS) ||
     (git ls-files --cached --others --exclude-standard)
 "
-export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
-export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+# Without fd, leave these unset so fzf falls back to its built-in file walker
+if [[ -n $FD_BIN ]]; then
+    export FZF_CTRL_T_COMMAND="$FD_BIN $FD_OPTIONS"
+    export FZF_ALT_C_COMMAND="$FD_BIN --type d $FD_OPTIONS"
+else
+    unset FZF_CTRL_T_COMMAND FZF_ALT_C_COMMAND
+fi
 
 ######
 ## bat

@@ -52,8 +52,7 @@ zstyle ':completion:*' cache-path ~/.zsh/cache                                  
 ######
 ## History
 ######
-setopt INC_APPEND_HISTORY           # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY                # Share history between all sessions.
+setopt SHARE_HISTORY                # Share history between all sessions (also writes each command immediately).
 setopt HIST_EXPIRE_DUPS_FIRST       # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_DUPS             # Don\'t record an entry that was just recorded again.
 setopt HIST_FIND_NO_DUPS            # Do not display a line previously found.
@@ -73,6 +72,7 @@ fi
 ######
 ## Keybindings
 ######
+bindkey -e                          # Emacs keymap (zsh picks vi mode when $EDITOR contains "vi")
 bindkey '^[Oc' forward-word         # Ctrl+Right
 bindkey '^[Od' backward-word        # Ctrl+Left
 bindkey '^[[1;5D' backward-word     # Ctrl+Left
@@ -86,44 +86,47 @@ bindkey '^[[Z' undo                 # Shift+tab undo last action
 ## Autoload and Initialization
 ######
 autoload -U compinit colors zcalc bashcompinit   # Load zsh functions for completion, colors, and calculations
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C  # Skip security check for faster startup
-fi
+# Full compinit (with security check) at most once a day; (#q) needs extended_glob
+() {
+    setopt local_options extended_glob
+    local zcompdump=${ZDOTDIR:-$HOME}/.zcompdump
+    if [[ ! -e $zcompdump || -n $zcompdump(#qN.mh+24) ]]; then
+        # touch only if the security check passed; compinit leaves an unchanged dump untouched
+        compinit -d "$zcompdump" && touch "$zcompdump"
+    else
+        compinit -C -d "$zcompdump"  # Skip security check for faster startup
+    fi
+}
 colors                              # Initialize terminal colors
 bashcompinit                        # Enable bash completion compatibility
 
 ######
 ## Window Title
 ######
-precmd() {
+_set_window_title() {
     emulate -L zsh
-    setopt prompt_subst
-
-    # if $2 is unset use $1 as default
-    # if it is set and empty, leave it as is
-    : ${2=$1}
+    local title="${USER}@${HOST%%.*}:${PWD/#$HOME/~}"
 
     case ${TERM} in
         xterm*|putty*|rxvt*|konsole*|ansi|mlterm*|alacritty|kitty|wezterm|st*)
-            # Set xterm title: user@host:cwd
-            printf '\033]0;%s@%s:%s\007' "$USER" "${HOST%%.*}" "${PWD/#$HOME/~}"
+            printf '\033]0;%s\007' "$title"
             ;;
         screen*|tmux*)
-            printf '\033_%s@%s:%s\033\\' "$USER" "${HOST%%.*}" "${PWD/#$HOME/~}"
+            printf '\033_%s\033\\' "$title"
             ;;
         *)
             # Try to use terminfo to set the title
             # If the feature is available set title
             if [[ -n "$terminfo[fsl]" ]] && [[ -n "$terminfo[tsl]" ]]; then
                 echoti tsl
-                print -Pn "$1"
+                print -rn -- "$title"
                 echoti fsl
             fi
-                ;;
+            ;;
     esac
 }
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _set_window_title
 
 ######
 ## Prompt
@@ -131,9 +134,10 @@ precmd() {
 setopt PROMPT_SUBST
 
 parse_git_branch() {
-    # Use git status --porcelain=v1 for faster parsing
+    # Use git status --porcelain=v1 for faster parsing; GIT_OPTIONAL_LOCKS=0 keeps
+    # the prompt from taking index.lock while other git processes run
     local git_status
-    git_status=$(git status --porcelain=v1 2>/dev/null) || return
+    git_status=$(GIT_OPTIONAL_LOCKS=0 git status --porcelain=v1 2>/dev/null) || return
     
     local git_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
     [[ -z $git_branch ]] && return
@@ -142,10 +146,14 @@ parse_git_branch() {
     [[ -z $git_status ]] && { printf " (%s)" "$git_branch"; return; }
     
     # Single pass through status
-    local tracked=0 untracked=0
+    local tracked=0 untracked=0 line
     while IFS= read -r line; do
         [[ -n "$line" ]] || continue
-        [[ $line == "?? "* ]] && ((untracked++)) || ((tracked++))
+        if [[ $line == "?? "* ]]; then
+            ((untracked++))
+        else
+            ((tracked++))
+        fi
     done <<< "$git_status"
   
     printf " (%s:%d:%d)" "$git_branch" "$tracked" "$untracked"
@@ -170,12 +178,12 @@ if [[ -r "$HOME/.config/bash/aliases.sh" ]]; then
     source "$HOME/.config/bash/aliases.sh"
 fi
 
-if [[ -r "$HOME/.config/bash/functions.sh" ]]; then
-    source "$HOME/.config/bash/functions.sh"
-fi
-
 if [[ -r "$HOME/.config/bash/variables.sh" ]]; then
     source "$HOME/.config/bash/variables.sh"
+fi
+
+if [[ -r "$HOME/.config/bash/functions.sh" ]]; then
+    source "$HOME/.config/bash/functions.sh"
 fi
 
 ######

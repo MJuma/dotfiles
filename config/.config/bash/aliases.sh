@@ -1,13 +1,12 @@
-alias sudo="sudo -E "                                                                                   # Preserve environment variables when calling sudo
+alias sudo="sudo "                                                                                      # Expand aliases after sudo
 alias cp="cp -i"                                                                                        # Confirm before overwriting files and directories
 alias df='df -h'                                                                                        # Human readable disk space usage
 alias free='free -m'                                                                                    # Free memory and swap in Mebibytes
 alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'        # Show free memory, uptime & ps updated every 3s
-alias nano='nano -c -m'                                                                                 # nano with cursor position shown and mouse support enabled
 alias ping='ping -c 5'                                                                                  # Ping address 5 times
-alias grep='grep --color=auto'                                                                         # Colorize grep
-alias egrep='egrep --color=auto'                                                                       # Colorize egrep
-alias fgrep='fgrep --color=auto'                                                                       # Colorize fgrep
+alias grep='grep --color=auto'                                                                          # Colorize grep
+alias egrep='egrep --color=auto'                                                                        # Colorize egrep
+alias fgrep='fgrep --color=auto'                                                                        # Colorize fgrep
 alias ..='cd ..'                                                                                        # Go up a directory
 alias ...='cd ../..'                                                                                    # Go up two directories
 alias histg="history | grep"                                                                            # Search through comman history: histg [keyword]
@@ -20,9 +19,8 @@ alias nethack='telnet nethack.alt.org'                                          
 alias dotfiles='code ~/dotfiles'                                                                        # Opens the dotfiles repo in a text editor
 alias hosts='code /etc/hosts'                                                                           # Opens the hosts file in a repo
 
-if [ -x /usr/bin/bat ]; then
+if command -v bat &>/dev/null; then
     alias cat='bat --paging=never'                                                                      # Swap cat with bat
-    alias man='man --pager=bat'                                                                         # Page man using bat
 fi
 
 if type xclip &>/dev/null; then
@@ -44,6 +42,7 @@ case "$OSTYPE" in
         alias ls='ls --color=auto'                                                              # Colorize ls
         alias xres="xrdb -merge ~/.Xresources"                                                  # Reload ~/.Xresources
         alias rebuild-fonts="fc-cache -f -v"                                                    # Rebuilds font cache
+        command -v bat &>/dev/null && alias man='man --pager=bat'                               # Page man using bat (man-db's --pager)
 
         distro_id=
         if [ -r /etc/os-release ]; then
@@ -67,9 +66,11 @@ case "$OSTYPE" in
                 alias clean='sudo apt autoremove'                                               # Removes unused packages
                 alias search='apt-cache search'                                                 # Search repository for a package
                 alias policy='apt-cache policy'                                                 # Show priority selection for a package
-                alias fd=fdfind                                                                 # Map fd to fd from fdfind in debian
-                alias bat=batcat                                                                # Map bat to bat from batcat in debian
-                alias cat=batcat                                                                # Map cat to bat
+                command -v fdfind &>/dev/null && alias fd=fdfind                                # Map fd to fd from fdfind in debian
+                if command -v batcat &>/dev/null; then
+                    alias bat=batcat                                                            # Map bat to bat from batcat in debian
+                    alias cat=batcat                                                            # Map cat to bat
+                fi
                 ;;
             fedora)
                 alias get='sudo dnf install'                                                    # Get a package

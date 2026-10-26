@@ -102,6 +102,7 @@ Write-Host ""
 # Git config
 Write-Host "${bold}Git config${reset}"
 New-Symlink "$HOME\.gitconfig" "$dotfilesRoot\git\.gitconfig"
+New-Symlink "$HOME\.config\git\ignore" "$dotfilesRoot\config\.config\git\ignore"
 Write-Host ""
 
 # Windows Terminal settings

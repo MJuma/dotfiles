@@ -8,6 +8,9 @@ web:*.{html,css,js,ts,tsx,jsx,sass,scss,less,json}*
 
 --glob=!*.resjson
 
+# Skip git internals when --hidden is used (e.g. by FZF_DEFAULT_COMMAND).
+--glob=!.git/
+
 # Set the colors.
 --colors=line:fg:yellow
 --colors=line:style:bold
