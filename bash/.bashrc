@@ -11,6 +11,12 @@
 # CTRL+U                (cut entire line into buffer)
 # CTRL+Y                ("yank" out whatever is in the buffer. aka paste)
 
+# ~/.local/bin for user-level installs; before the interactive check so `ssh host cmd` gets it too
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;

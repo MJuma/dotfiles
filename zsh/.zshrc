@@ -28,6 +28,13 @@
 [[ -o interactive ]] || return
 
 ######
+## PATH
+######
+# ~/.local/bin first for user-level installs (-U drops later copies, e.g. where macOS path_helper moved it)
+typeset -U path
+path=("$HOME/.local/bin" $path)
+
+######
 ## Shell Behavior
 ######
 setopt ALIASES                      # Enable alias expansion
