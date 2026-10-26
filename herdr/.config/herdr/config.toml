@@ -1,0 +1,44 @@
+# Herdr configuration. Reference: https://herdr.dev/docs/configuration/
+# Print every option with its default value: herdr --default-config
+onboarding = false
+
+[keys]
+# The same prefix as tmux. Press ctrl+a twice to send ctrl+a to the program,
+# for example to go to the start of the line in a shell or in Copilot CLI.
+prefix = "ctrl+a"
+
+# herdr-copilot-park: https://github.com/MJuma/herdr-copilot-park
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "herdr-copilot-park.park"
+description = "park this Copilot tab"
+
+[[keys.command]]
+key = "prefix+shift+u"
+type = "plugin_action"
+command = "herdr-copilot-park.park-all"
+description = "park all idle Copilot tabs"
+
+[ui]
+# A separate icon for blocked, working, done, idle, and unknown agents, instead
+# of colored dots.
+status_indicators = "symbols"
+# The tab bar is at the bottom, like the tmux status bar.
+tab_bar_position = "bottom"
+# The right side shows "n (m) host": n Copilot sessions, of which m are
+# parked, on the machine that runs the Herdr server.
+tab_bar_right = [
+  { type = "command", command = "~/.config/herdr/copilot-status.sh", interval_seconds = 10, timeout_seconds = 3 },
+  { type = "hostname" },
+]
+
+# Agents panel as a tab list: the tab name first, then the machine and Space.
+# "parked" shows only on parked tabs. The machine "Local" is hidden.
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", { token = "tab", bold = true },
+   { token = "agent", dim = true, rules = [{ equals = "copilot", hide = true }] }],
+  [{ token = "machine", dim = true, rules = [{ equals = "Local", hide = true }] },
+   { token = "workspace", dim = true }],
+]

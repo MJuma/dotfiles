@@ -76,6 +76,7 @@ backup_old_files() {
         ".bashrc"
         ".config/alacritty"
         ".config/bash"
+        ".config/herdr/config.toml"
         ".config/ripgreprc"
         ".config/vim"
         ".gitconfig"
