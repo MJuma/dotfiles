@@ -188,7 +188,7 @@ case "$OSTYPE" in
             distro_id=$(. /etc/os-release && echo "$ID")
         fi
         case "$distro_id" in
-            arch | manjaro)
+            arch | manjaro | endeavouros)
                 [ -r /usr/share/fzf/completion.zsh ] && . /usr/share/fzf/completion.zsh       # fzf zsh completion
                 [ -r /usr/share/fzf/key-bindings.zsh ] && . /usr/share/fzf/key-bindings.zsh   # fzf key bindings
                 ;;

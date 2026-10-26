@@ -50,7 +50,7 @@ case "$OSTYPE" in
             distro_id=$(. /etc/os-release && echo "$ID")
         fi
         case "$distro_id" in
-            arch | manjaro)
+            arch | manjaro | endeavouros)
                 alias get='yay -S'                                                              # Get a package
                 alias remove='yay -Rsu'                                                         # Remove a package
                 alias update='yay -Syyu'                                                        # Update package list and upgrade packages
