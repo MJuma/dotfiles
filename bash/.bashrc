@@ -93,18 +93,32 @@ esac
 ######
 ## Shell Prompt
 ######
-parse_git_branch() {
-    local branch
-    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || return
+# Bash can't run git status in the background, so for a big index (over 1MB, about 6k files) or
+# none at all the prompt shows just (branch) rather than making every prompt wait on a big tree
+_git_prompt_max_index_bytes=1000000
 
-    local tracked=0 untracked=0
+parse_git_branch() {
+    local branch paths git_dir index_bytes=0 file
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || return
+    # Paths only: asking git for the shared index path (--shared-index-path) would load the whole index
+    paths=$(git rev-parse --git-dir --git-path index 2>/dev/null) || return
+    git_dir=${paths%%$'\n'*}
+    for file in "${paths#*$'\n'}" "$git_dir"/sharedindex.*; do   # a split index keeps most entries in sharedindex.*
+        [[ -f $file ]] && index_bytes=$(( index_bytes + $(wc -c < "$file") ))
+    done
+    if (( index_bytes == 0 || index_bytes > _git_prompt_max_index_bytes )); then
+        echo -e " (${branch})"
+        return
+    fi
+
+    local tracked=0 untracked=0 line
     while IFS= read -r line; do
         if [[ "$line" == '?? '* ]]; then
             ((untracked++))
         elif [[ -n "$line" ]]; then
             ((tracked++))
         fi
-    done < <(GIT_OPTIONAL_LOCKS=0 git status --porcelain 2>/dev/null)   # no index.lock from the prompt
+    done < <(git status --porcelain 2>/dev/null)
 
     echo -e " (${branch}:${tracked}:${untracked})"
 }
