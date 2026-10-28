@@ -9,3 +9,4 @@ brew "bat"                  # previews, cat alias
 brew "tmux"
 brew "code-minimap"         # minimap.vim
 cask "font-hack-nerd-font"  # powerline glyphs in tmux, lightline and the pwsh prompt
+cask "ghostty"              # terminal; config in config/.config/ghostty

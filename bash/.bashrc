@@ -215,5 +215,12 @@ case "$OSTYPE" in
         ;;
 esac
 
+######
+## Ghostty
+######
+if [[ -n $GHOSTTY_RESOURCES_DIR && -z ${__ghostty_bash_flags+x} && -r $GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash ]]; then
+    source "$GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash"
+fi
+
 # Machine-specific overrides (credentials, tokens, etc.)
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local

@@ -11,8 +11,6 @@ Dependencies:
 - GNU Stow (on macOS, `./setup.sh` installs it with Homebrew)
 - cURL
 
-The configs also use these tools when they're installed: fzf, ripgrep, fd, bat, git-delta (Git's pager), git-lfs, tmux, and a Nerd Font such as Hack Nerd Font. Vim's coc.nvim and fzf-preview.vim plugins need Node.js.
-
 - macOS: `./setup.sh` installs them from the [Brewfile](Brewfile) with Homebrew, so on a new Mac install [Homebrew](https://brew.sh) first.
 - Linux: install the same packages with your package manager. Debian and Ubuntu install fd and bat as `fdfind` and `batcat`; the shell aliases handle that.
 

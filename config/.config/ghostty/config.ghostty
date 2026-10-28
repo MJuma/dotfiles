@@ -1,0 +1,46 @@
+# Ghostty configuration. Reference: https://ghostty.org/docs/config
+# Print every option with its default value and docs: ghostty +show-config --default --docs
+# Reload with Cmd+Shift+, (or the Ghostty > Reload Configuration menu).
+
+######
+## Appearance
+######
+theme = Relaxed
+background = #303030
+palette = 10=#909d63
+cursor-text = #000000
+
+font-family = Hack Nerd Font Mono
+font-size = 16
+
+window-theme = dark
+maximize = true
+
+######
+## Mouse and clipboard
+######
+copy-on-select = both
+middle-click-action = clipboard-paste
+
+######
+## Keyboard
+######
+# Left Option sends Alt (tmux Alt+1..5 layouts, fzf Alt+C, Alt+B/F word jumps);
+# right Option still types special characters
+macos-option-as-alt = left
+# Send Ctrl+L instead of clearing Ghostty's screen, which leaves tmux blank until it redraws.
+# tmux binds Ctrl+L to clear the screen and its scrollback.
+keybind = super+k=text:\x0c
+
+######
+## Shell integration
+######
+# The ssh wrapper installs Ghostty's terminfo on remote hosts and sets TERM=xterm-ghostty there
+# (xterm-256color if the install fails), so remote tmux knows it can set the clipboard.
+# .zshrc and .bashrc load the integration in tmux panes too, so ssh from tmux gets the wrapper.
+shell-integration-features = ssh-env,ssh-terminfo
+
+######
+## Windows
+######
+confirm-close-surface = false

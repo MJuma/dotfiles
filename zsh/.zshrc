@@ -311,5 +311,12 @@ if [[ -t 0 ]]; then
     esac
 fi
 
+######
+## Ghostty
+######
+if [[ -n $GHOSTTY_RESOURCES_DIR && -r $GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration ]]; then
+    source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+fi
+
 # Machine-specific overrides (credentials, tokens, etc.)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

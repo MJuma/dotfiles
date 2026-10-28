@@ -53,6 +53,33 @@ set noshowmode                                                                  
 set incsearch                                                                   " search as characters are entered
 set hlsearch                                                                    " highlight matches
 
+""""" Clipboard """""
+" Send yanks to the terminal's clipboard with OSC 52, which also works over ssh and through tmux
+function! s:Osc52Yank() abort
+    if v:event.operator !=# 'y' || index(['', '"', '+', '*'], v:event.regname) < 0
+        return
+    endif
+    if exists('*base64_encode') && exists('*str2blob')
+        let l:lines = v:event.regtype ==# 'V' ? v:event.regcontents + [''] : v:event.regcontents
+        let l:encoded = base64_encode(str2blob(l:lines))                        " str2blob joins the lines with newlines
+    else
+        let l:text = join(v:event.regcontents, "\n") . (v:event.regtype ==# 'V' ? "\n" : '')
+        let l:encoded = substitute(system('base64', l:text), '\n', '', 'g')       " GNU base64 wraps lines
+    endif
+    if strlen(l:encoded) > 1000000                                              " tmux drops escape sequences over 1MiB
+        echohl WarningMsg | echo 'Yank too large to copy to the clipboard' | echohl None
+        return
+    endif
+    call echoraw("\e]52;c;" . l:encoded . "\x07")
+endfunction
+
+if exists('##TextYankPost') && exists('*echoraw') && !has('gui_running')
+    augroup osc52_yank
+        autocmd!
+        autocmd TextYankPost * call s:Osc52Yank()
+    augroup END
+endif
+
 """"" Folding """""
 set foldenable                                                                  " enable folding
 set foldlevelstart=10                                                           " open most folds by default
