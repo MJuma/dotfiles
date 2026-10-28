@@ -46,7 +46,9 @@ if ! shopt -oq posix; then
     [ -r /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
     type brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ] && . "$(brew --prefix)/etc/bash_completion"
 
-    if [ -d /etc/bash_completion.d ]; then
+    # bash-completion 2 already loads /etc/bash_completion.d itself, then removes the `have` helper those
+    # files use, so loading them again fails with "have: command not found"
+    if [ -z "${BASH_COMPLETION_COMPAT_DIR:-}" ] && [ -d /etc/bash_completion.d ]; then
         for bcfile in /etc/bash_completion.d/* ; do
             [ -f "$bcfile" ] && . "$bcfile"
         done
